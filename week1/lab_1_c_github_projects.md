@@ -1,11 +1,11 @@
 # Lab 1C: GitHub Projects
 
 ## 🎯 Objectives
-- Create and configure a GitHub Project for team collaboration
-- Set up GitHub Pages for project documentation
-- Design a comprehensive custom README
-- Implement project management workflows
-- Configure team collaboration settings
+- Create project
+- Board selection 
+- Project workflow 
+- Create project README (markdown essentials)
+- GitHub Pages setup and integration
 
 ## 📋 Prerequisites
 - Completed [Lab 1B: GitHub Practices](lab_1_b_github_practices.md)
@@ -13,9 +13,9 @@
 - Understanding of Markdown syntax
 - Basic project management concepts
 
-## 🚀 Creating GitHub Projects
+## 🚀 Step-by-Step Instructions
 
-### Step 1: Setting Up a New GitHub Project
+### Step 1: Create Project
 
 1. **Navigate to Projects:**
    - Go to your GitHub repository
@@ -23,504 +23,392 @@
    - Click **New project**
 
 2. **Choose Project Template:**
-   - Select **Team backlog** or **Basic kanban**
-   - Give your project a descriptive name: "Advanced Software WIL - Team Project"
-   - Add a description: "Collaborative project for Advanced Software WIL course"
+   - Select **Team backlog** template
+   - Give your project a name: "Advanced Software WIL Project"
+   - Add a description: "Project management for Advanced Software WIL course"
+   - Set visibility to **Public** (for learning purposes)
 
-3. **Configure Project Settings:**
-   - Set visibility (Private for team projects)
-   - Add team members
-   - Configure access permissions
+3. **Create the Project:**
+   - Click **Create project**
+   - Your new project board will open
 
-### Step 2: Customizing Project Views
+### Step 2: Board Selection 
 
-#### Creating Custom Views
+1. **Explore Default Views:**
+   - **Table View:** Spreadsheet-like view for detailed information
+   - **Board View:** Kanban-style board for visual workflow
+   - **Roadmap View:** Timeline view for planning
 
-1. **Sprint Planning View:**
+2. **Configure Board Features:**
+   
+   **Add Custom Fields:**
+   - Click the **+** next to field headers
+   - Add these fields:
+     ```
+     Priority: Single select (High, Medium, Low, Critical)
+     Story Points: Number
+     Sprint: Text
+     Feature Area: Single select (Frontend, Backend, DevOps, Documentation)
+     ```
+
+3. **Set Up Board Columns:**
+   - **Backlog** - New items waiting to be prioritized
+   - **Ready** - Items ready for development
+   - **In Progress** - Currently being worked on
+   - **Review** - In code review or testing
+   - **Done** - Completed items
+
+### Step 3: Project Workflow 
+
+#### Creating Issues
+
+1. **Create Sample Issues:**
    ```markdown
-   View Name: Sprint Planning
-   Group by: Status
-   Filter: Iteration
-   Sort: Priority (High to Low)
+   Issue 1: Create project homepage
+   - Description: Design and implement main landing page (index.html)
+   - Labels: frontend, homepage
+   - Priority: High
+   - Feature Area: Frontend
+   
+   Issue 2: Write project documentation
+   - Description: Create comprehensive README.md file
+   - Labels: documentation
+   - Priority: Medium
+   - Feature Area: Documentation
+   
+   Issue 3: Set up GitHub Pages
+   - Description: Deploy homepage to GitHub Pages
+   - Labels: deployment, pages
+   - Priority: Low
+   - Feature Area: DevOps
    ```
 
-2. **Team Board View:**
+2. **Add Issues to Project:**
+   - Go to your repository **Issues** tab
+   - Click **New issue**
+   - Fill in title and description
+   - Add labels and assign to project
+   - Repeat for all sample issues
+
+#### Assigning and Movement
+
+1. **Assign Issues:**
+   - In the project board, click on an issue
+   - Set **Assignees** (assign to yourself for practice)
+   - Set **Priority** using custom field
+   - Set **Feature Area**
+
+2. **Practice Manual Movement:**
+   - Drag issues between columns
+   - Move Issue 1 to "In Progress"
+   - Move Issue 2 to "Ready"
+   - Leave Issue 3 in "Backlog"
+
+#### Automated Movement on PR
+
+1. **Set Up Automation Rules:**
+   - In your project, click the **⚙️** (Settings)
+   - Go to **Workflows**
+   - Click **Add workflow**
+
+2. **Configure PR Automation:**
    ```markdown
-   View Name: Team Kanban
-   Group by: Assignee
-   Filter: Current Sprint
-   Sort: Created Date
+   Workflow 1: Move to "In Progress" when PR is opened
+   - Trigger: Pull request opened
+   - Action: Set status to "In Progress"
+   
+   Workflow 2: Move to "Review" when PR is ready for review
+   - Trigger: Pull request marked ready for review
+   - Action: Set status to "Review"
+   
+   Workflow 3: Move to "Done" when PR is merged
+   - Trigger: Pull request merged
+   - Action: Set status to "Done"
    ```
 
-3. **Roadmap View:**
+3. **Test the Workflow:**
+   - Create a new branch: `git checkout -b feature/test-workflow`
+   - Make a small change to README
+   - Commit and push: `git push origin feature/test-workflow`
+   - Create a PR and observe project board changes
+
+### Step 4: Create Project README (Markdown Essentials)
+
+1. **Create Comprehensive README:**
    ```markdown
-   View Name: Project Roadmap
-   Layout: Roadmap
-   Group by: Epic/Feature
-   Date field: Target Date
+   # Advanced Software WIL Project
+   
+   ![Project Banner](https://via.placeholder.com/800x200/0366d6/ffffff?text=Advanced+Software+WIL)
+   
+   ## 📋 Project Overview
+   
+   This project demonstrates GitHub project management and web development fundamentals including:
+   - GitHub Projects and workflow management
+   - Professional README documentation
+   - GitHub Pages deployment
+   - Basic web development with HTML/CSS
+   
+   ## 🚀 Features
+   
+   - **Project Management:** GitHub Projects with automated workflows
+   - **Documentation:** Comprehensive README with markdown essentials
+   - **Web Presence:** Professional homepage with GitHub Pages
+   - **Version Control:** Git workflows and collaboration practices
+   
+   ## 🛠 Technology Stack
+   
+   | Technology | Purpose |
+   |------------|---------|
+   | HTML | Web structure |
+   | CSS | Styling and design |
+   | GitHub Projects | Project management |
+   | GitHub Pages | Web hosting |
+   | Markdown | Documentation |
+   
+   ## 📁 Project Structure
+   
+   ```bash
+   advanced-software-wil/
+   ├── index.html         # Main homepage
+   └── README.md          # Project documentation
+   ```
+   
+   ### Quick Start
+   
+   1. **Clone the repository:**
+      ```bash
+      git clone https://github.com/your-username/advanced-software-wil.git
+      cd advanced-software-wil
+      ```
+   
+   2. **Open index.html:**
+      - Open `index.html` in your web browser
+      - Or visit the live site on GitHub Pages
+   
+   3. **Access the live site:**
+      - Homepage: https://your-username.github.io/advanced-software-wil
+   
+   ## 📊 Project Status
+   
+   ![GitHub issues](https://img.shields.io/github/issues/your-username/advanced-software-wil)
+   ![GitHub pull requests](https://img.shields.io/github/issues-pr/your-username/advanced-software-wil)
+   ![GitHub Pages](https://img.shields.io/github/deployments/your-username/advanced-software-wil/github-pages)
+   
+   ## 🤝 Contributing
+   
+   1. Fork the repository
+   2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+   3. Commit your changes (`git commit -m 'Add amazing feature'`)
+   4. Push to branch (`git push origin feature/amazing-feature`)
+   5. Open a Pull Request
+   
+   ## 👥 Team
+   
+   | Name | Role | GitHub |
+   |------|------|--------|
+   | Student Name | Developer | [@username](https://github.com/username) |
+   
+   ## 🌐 Live Demo
+   
+   [![Visit Live Site](https://img.shields.io/badge/Visit-Live%20Site-blue?style=for-the-badge)](https://your-username.github.io/advanced-software-wil)
+   
+   [🏠 **Visit Our Homepage**](https://your-username.github.io/advanced-software-wil)
+   
+   ## 📄 License
+   
+   This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
    ```
 
-#### Setting Up Custom Fields
+2. **Markdown Essentials Used:**
+   - **Headers:** `#`, `##`, `###`
+   - **Emphasis:** `**bold**`, `*italic*`
+   - **Links:** `[text](url)`
+   - **Images:** `![alt](url)`
+   - **Code blocks:** Triple backticks
+   - **Tables:** Pipe syntax
+   - **Lists:** `-` and numbered
+   - **Badges:** Shield.io integration
+   - **Blockquotes:** `>`
 
-Add these custom fields to enhance project tracking:
+### Step 5: GitHub Pages Setup and Integration
 
-```markdown
-Custom Fields:
-- Priority: Single Select (High, Medium, Low, Critical)
-- Story Points: Number (1, 2, 3, 5, 8, 13)
-- Epic: Single Select (Authentication, Dashboard, API, Testing)
-- Sprint: Iteration field
-- Reviewer: People field
-- Definition of Done: Checkbox
-```
+This step covers creating index.html, deploying to GitHub Pages, adding homepage links to README with clickable images, and integrating everything together.
 
-### Step 3: Project Workflow Implementation
+#### Create index.html
 
-#### Creating Issue Templates
-
-Navigate to your repository settings and create issue templates:
-
-**1. Feature Request Template:**
-```markdown
----
-name: Feature Request
-about: Propose a new feature for the project
-title: '[FEATURE] '
-labels: ['enhancement', 'needs-triage']
-assignees: ''
----
-
-## Feature Description
-<!-- Describe the feature you'd like to see -->
-
-## User Story
-As a [type of user], I want [some goal] so that [some reason].
-
-## Acceptance Criteria
-- [ ] Criterion 1
-- [ ] Criterion 2
-- [ ] Criterion 3
-
-## Additional Context
-<!-- Add any other context, screenshots, or examples -->
-
-## Definition of Done
-- [ ] Code complete and reviewed
-- [ ] Tests written and passing
-- [ ] Documentation updated
-- [ ] Deployed to staging environment
-```
-
-**2. Bug Report Template:**
-```markdown
----
-name: Bug Report
-about: Create a report to help us improve
-title: '[BUG] '
-labels: ['bug', 'needs-triage']
-assignees: ''
----
-
-## Bug Description
-<!-- A clear description of what the bug is -->
-
-## Steps to Reproduce
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
-
-## Expected Behavior
-<!-- What you expected to happen -->
-
-## Actual Behavior
-<!-- What actually happened -->
-
-## Environment
-- OS: [e.g. Windows 10, macOS, Ubuntu]
-- Browser: [e.g. Chrome, Firefox, Safari]
-- Version: [e.g. 1.0.0]
-
-## Additional Context
-<!-- Screenshots, logs, or other relevant information -->
-```
-
-#### Setting Up Project Automation
-
-Configure automation rules for your project:
-
-1. **Auto-assign Issues:**
-   ```yaml
-   When: Issue created
-   Then: Add to project
-   And: Set status to "Triage"
+1. **Create index.html in repository root:**
+   ```bash
+   # Create index.html in the main repository directory
+   touch index.html
    ```
 
-2. **Move to In Progress:**
-   ```yaml
-   When: Pull request opened
-   Then: Set status to "In Progress"
-   And: Link to related issue
+2. **Create index.html content:**
+   ```html
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>Hello From GitHub Pages</title>
+   </head>
+   <body>
+       <h1>Hello From GitHub Pages</h1>
+   </body>
+   </html>
    ```
 
-3. **Move to Done:**
-   ```yaml
-   When: Pull request merged
-   Then: Set status to "Done"
-   And: Close linked issues
-   ```
-
-### Step 4: Setting Up GitHub Pages
-
-#### Basic Pages Setup
+#### Deploy to GitHub Pages
 
 1. **Enable GitHub Pages:**
    - Go to repository **Settings**
    - Scroll to **Pages** section
-   - Select source: **Deploy from a branch**
-   - Choose branch: **main** and folder: **/ (root)**
+   - Under **Source**, select **Deploy from a branch**
+   - Choose **main** branch and **/ (root)** folder
+   - Click **Save**
 
-2. **Create Basic Documentation Structure:**
-   ```bash
-   # Create docs directory
-   mkdir docs
-   cd docs
-   
-   # Create index page
-   cat > index.md << 'EOF'
+2. **Wait for Deployment:**
+   - GitHub will build and deploy your site
+   - You'll get a URL like: `https://your-username.github.io/repository-name`
+
+3. **Test Your Site:**
+   - Visit the generated URL
+   - Verify that your index.html loads correctly
+
+#### Integrate Homepage with README
+
+1. **Add Homepage Link and Clickable Images to README:**
+   ```markdown
    # Advanced Software WIL Project
    
-   Welcome to our team project documentation.
+   ![Project Banner](https://via.placeholder.com/800x200/0366d6/ffffff?text=Advanced+Software+WIL)
    
-   ## Navigation
-   - [Project Overview](overview.md)
-   - [Getting Started](getting-started.md)
-   - [API Documentation](api.md)
-   - [Team Information](team.md)
-   EOF
+   ## 🌐 Live Demo
+   
+   [![Visit Live Site](https://via.placeholder.com/400x200/0366d6/ffffff?text=Click+to+Visit)](https://your-username.github.io/advanced-software-wil)
+   
+   **[🏠 Visit Our Homepage](https://your-username.github.io/advanced-software-wil)**
+   
+   ## 📋 Project Overview
+   <!-- Rest of your README content -->
    ```
 
-3. **Configure _config.yml:**
-   ```yaml
-   # docs/_config.yml
-   theme: jekyll-theme-minimal
-   title: Advanced Software WIL
-   description: Team project for Advanced Software course
+2. **Create Multiple Clickable Images in README:**
+   ```markdown
+   ## 🖼️ Project Gallery
    
-   plugins:
-     - jekyll-feed
-     - jekyll-sitemap
+   <!-- Main project dashboard - clickable -->
+   [![Project Dashboard](https://via.placeholder.com/600x300/667eea/ffffff?text=Click+to+Visit+Site)](https://your-username.github.io/advanced-software-wil)
    
-   navbar:
-     - title: Home
-       url: /
-     - title: Documentation
-       url: /docs/
-     - title: API
-       url: /api/
+   <!-- Homepage preview - clickable -->
+   [![Homepage Preview](https://via.placeholder.com/600x300/764ba2/ffffff?text=Homepage+Preview)](https://your-username.github.io/advanced-software-wil)
+   
+   <!-- Project board link - clickable -->
+   [![Project Board](https://via.placeholder.com/600x300/28a745/ffffff?text=View+Project+Board)](https://github.com/your-username/advanced-software-wil/projects)
    ```
 
-#### Advanced Pages Configuration
+3. **Add Interactive Elements Section:**
+   ```markdown
+   ## 🔗 Quick Access Links
+   
+   | Resource | Link | Description |
+   |----------|------|-------------|
+   | 🏠 Homepage | [Visit Site](https://your-username.github.io/advanced-software-wil) | Live project homepage |
+   | 📋 Project Board | [View Board](https://github.com/your-username/advanced-software-wil/projects) | Project management |
+   | 📁 Repository | [View Code](https://github.com/your-username/advanced-software-wil) | Source code |
+   | 📄 Documentation | [Read Docs](README.md) | Project documentation |
+   ```
 
-Create a comprehensive documentation site:
+4. **Embed Live Site in README:**
+   
+   You can embed your live GitHub Pages site directly into your README using HTML iframe or by creating preview links:
 
-**1. Overview Page (docs/overview.md):**
-```markdown
-# Project Overview
+   **Option 1: Create a Preview Section in README:**
+   ```markdown
+   ## 🌐 Live Site Preview
+   
+   [![Live Site](https://img.shields.io/badge/🌐_Live_Site-Visit_Now-blue?style=for-the-badge)](https://your-username.github.io/advanced-software-wil)
+   
+   **Quick Access:** [https://your-username.github.io/advanced-software-wil](https://your-username.github.io/advanced-software-wil)
+   
+   ### Site Features:
+   - Simple "Hello From GitHub Pages" message
+   - Deployed automatically from main branch
+   - Accessible worldwide via GitHub Pages
+   ```
 
-## Mission Statement
-Our mission is to develop a comprehensive software solution that demonstrates advanced development practices, DevOps integration, and cloud deployment strategies.
+   **Option 2: Add Site Status to Project Overview:**
+   ```markdown
+   ## 📊 Project Status & Links
+   
+   | Component | Status | Link |
+   |-----------|--------|------|
+   | 🌐 Live Site | [![Deployed](https://img.shields.io/badge/Status-Live-green)](https://your-username.github.io/advanced-software-wil) | [Visit Site](https://your-username.github.io/advanced-software-wil) |
+   | 📋 Project Board | [![Active](https://img.shields.io/badge/Status-Active-blue)](https://github.com/your-username/advanced-software-wil/projects) | [View Board](https://github.com/your-username/advanced-software-wil/projects) |
+   | 📁 Repository | [![Public](https://img.shields.io/badge/Status-Public-brightgreen)](https://github.com/your-username/advanced-software-wil) | [View Code](https://github.com/your-username/advanced-software-wil) |
+   ```
 
-## Architecture
-![Architecture Diagram](images/architecture.png)
-
-## Technology Stack
-- **Frontend:** React.js with TypeScript
-- **Backend:** Node.js with Express
-- **Database:** PostgreSQL
-- **Cloud:** Azure App Service
-- **CI/CD:** GitHub Actions
-- **Monitoring:** Azure Application Insights
-
-## Project Timeline
-- Week 1-2: Setup and Planning
-- Week 3-4: Core Development
-- Week 5-6: Integration and Testing
-- Week 7-8: Deployment and Documentation
-- Week 9-10: Final Polish and Presentation
-```
-
-**2. Getting Started Guide (docs/getting-started.md):**
-```markdown
-# Getting Started
-
-## Prerequisites
-- Node.js 18+
-- Docker
-- Azure CLI
-- Git
-
-## Local Development Setup
-
-### 1. Clone the Repository
-\`\`\`bash
-git clone https://github.com/your-org/advanced-software-wil.git
-cd advanced-software-wil
-\`\`\`
-
-### 2. Install Dependencies
-\`\`\`bash
-npm install
-\`\`\`
-
-### 3. Environment Configuration
-\`\`\`bash
-cp .env.example .env
-# Edit .env with your configuration
-\`\`\`
-
-### 4. Start Development Server
-\`\`\`bash
-npm run dev
-\`\`\`
-
-## Contributing
-Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting pull requests.
-```
-
-### Step 5: Creating a Comprehensive README
-
-Replace your repository's README.md with a professional template:
-
-```markdown
-# 🚀 Advanced Software WIL - Team Project
-
-[![Build Status](https://github.com/your-org/advanced-software-wil/workflows/CI/badge.svg)](https://github.com/your-org/advanced-software-wil/actions)
-[![Deploy Status](https://github.com/your-org/advanced-software-wil/workflows/Deploy/badge.svg)](https://github.com/your-org/advanced-software-wil/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
-A comprehensive software development project demonstrating modern DevOps practices, cloud integration, and collaborative development workflows.
-
-## 📋 Table of Contents
-- [Overview](#overview)
-- [Features](#features)
-- [Technology Stack](#technology-stack)
-- [Getting Started](#getting-started)
-- [Project Structure](#project-structure)
-- [Development Workflow](#development-workflow)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
-- [Team](#team)
-- [License](#license)
-
-## 🎯 Overview
-
-This project serves as a capstone for the Advanced Software WIL course, integrating:
-- Modern web development practices
-- Cloud-native architecture
-- Automated CI/CD pipelines
-- Comprehensive testing strategies
-- Professional project management
-
-## ✨ Features
-
-- 🔐 **Authentication & Authorization** - Secure user management
-- 📊 **Dashboard Analytics** - Real-time data visualization
-- 🔄 **API Integration** - RESTful API with OpenAPI documentation
-- 🐳 **Containerization** - Docker-based development and deployment
-- ☁️ **Cloud Deployment** - Azure App Service integration
-- 📈 **Monitoring** - Application performance monitoring
-- 🧪 **Testing** - Unit, integration, and E2E testing
-
-## 🛠 Technology Stack
-
-### Frontend
-- **Framework:** React 18 with TypeScript
-- **Styling:** Tailwind CSS
-- **State Management:** Redux Toolkit
-- **Testing:** Jest + React Testing Library
-
-### Backend
-- **Runtime:** Node.js 18
-- **Framework:** Express.js
-- **Database:** PostgreSQL with Prisma ORM
-- **Authentication:** JWT with refresh tokens
-- **Documentation:** Swagger/OpenAPI
-
-### DevOps & Cloud
-- **Containerization:** Docker & Docker Compose
-- **CI/CD:** GitHub Actions
-- **Cloud Platform:** Microsoft Azure
-- **Monitoring:** Azure Application Insights
-- **Infrastructure:** Azure Resource Manager templates
-
-## 🚀 Getting Started
-
-### Prerequisites
-- [Node.js](https://nodejs.org/) (v18 or higher)
-- [Docker](https://www.docker.com/)
-- [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/)
-- [Git](https://git-scm.com/)
-
-### Quick Start
-
-1. **Clone the repository**
-   \`\`\`bash
-   git clone https://github.com/your-org/advanced-software-wil.git
-   cd advanced-software-wil
-   \`\`\`
-
-2. **Install dependencies**
-   \`\`\`bash
-   npm install
-   \`\`\`
-
-3. **Set up environment**
-   \`\`\`bash
-   cp .env.example .env
-   # Configure your environment variables
-   \`\`\`
-
-4. **Start development environment**
-   \`\`\`bash
-   docker-compose up -d
-   npm run dev
-   \`\`\`
-
-5. **Access the application**
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:8000
-   - API Documentation: http://localhost:8000/docs
-
-## 📁 Project Structure
-
-\`\`\`
-advanced-software-wil/
-├── apps/
-│   ├── frontend/          # React frontend application
-│   └── backend/           # Node.js backend API
-├── packages/
-│   ├── shared/            # Shared utilities and types
-│   └── ui/                # Shared UI components
-├── infrastructure/
-│   ├── docker/            # Docker configurations
-│   └── azure/             # Azure Resource Manager templates
-├── .github/
-│   └── workflows/         # GitHub Actions workflows
-├── docs/                  # Project documentation
-└── scripts/               # Build and deployment scripts
-\`\`\`
-
-## 🔄 Development Workflow
-
-### Branch Strategy
-- \`main\` - Production ready code
-- \`develop\` - Integration branch
-- \`feature/*\` - Feature development
-- \`hotfix/*\` - Critical fixes
-
-### Commit Conventions
-We follow [Conventional Commits](https://www.conventionalcommits.org/):
-- \`feat:\` - New features
-- \`fix:\` - Bug fixes
-- \`docs:\` - Documentation changes
-- \`style:\` - Code style changes
-- \`refactor:\` - Code refactoring
-- \`test:\` - Test additions/changes
-- \`chore:\` - Maintenance tasks
-
-### Pull Request Process
-1. Create feature branch from \`develop\`
-2. Implement changes with tests
-3. Ensure all checks pass
-4. Submit PR with detailed description
-5. Address review feedback
-6. Merge after approval
-
-## 🚀 Deployment
-
-### Staging Environment
-Automatic deployment to staging on push to \`develop\` branch.
-- URL: https://advanced-software-wil-staging.azurewebsites.net
-
-### Production Environment
-Manual deployment to production via GitHub Actions.
-- URL: https://advanced-software-wil.azurewebsites.net
-
-### Infrastructure as Code
-\`\`\`bash
-# Deploy infrastructure
-az deployment group create \\
-  --resource-group rg-advanced-software-wil \\
-  --template-file infrastructure/azure/main.bicep \\
-  --parameters @infrastructure/azure/parameters.json
-\`\`\`
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
-### Development Setup
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Ensure all tests pass
-6. Submit a pull request
-
-## 👥 Team
-
-| Name | Role | GitHub | Email |
-|------|------|--------|-------|
-| Team Lead | Full-Stack Developer | [@teamlead](https://github.com/teamlead) | teamlead@example.com |
-| Developer 1 | Frontend Developer | [@dev1](https://github.com/dev1) | dev1@example.com |
-| Developer 2 | Backend Developer | [@dev2](https://github.com/dev2) | dev2@example.com |
-| Developer 3 | DevOps Engineer | [@dev3](https://github.com/dev3) | dev3@example.com |
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 📚 Additional Resources
-
-- [Project Documentation](https://your-org.github.io/advanced-software-wil/)
-- [API Documentation](https://your-org.github.io/advanced-software-wil/api/)
-- [Architecture Decision Records](docs/adr/)
-- [Deployment Guide](docs/deployment.md)
-
----
-
-**Built with ❤️ by the Advanced Software WIL Team**
-```
+   **Option 3: Create Quick Links Section:**
+   ```markdown
+   ## 🚀 Quick Links
+   
+   - 🏠 **Homepage:** [your-username.github.io/advanced-software-wil](https://your-username.github.io/advanced-software-wil)
+   - 📋 **Project Board:** [GitHub Projects](https://github.com/your-username/advanced-software-wil/projects)
+   - 📁 **Source Code:** [Repository](https://github.com/your-username/advanced-software-wil)
+   - 📄 **Documentation:** [README.md](README.md)
+   ```
 
 ## 🔍 Validation Checklist
 
 Your GitHub project setup is complete when:
-- [ ] GitHub Project is created and configured
-- [ ] Custom fields and views are set up
-- [ ] Issue templates are configured
-- [ ] Project automation rules are active
-- [ ] GitHub Pages is enabled and accessible
-- [ ] Comprehensive README is in place
-- [ ] Team members have appropriate access
-- [ ] Documentation structure is established
+
+**Project Creation:**
+- [ ] GitHub Project created with proper name and description
+- [ ] Project visibility set appropriately
+- [ ] Project linked to repository
+
+**Board Configuration:**
+- [ ] Custom fields added (Priority, Story Points, Sprint, Feature Area)
+- [ ] Board columns configured (Backlog, Ready, In Progress, Review, Done)
+- [ ] Multiple views available (Table, Board, Roadmap)
+
+**Workflow Implementation:**
+- [ ] Sample issues created and added to project
+- [ ] Issues properly assigned and labeled
+- [ ] Manual movement between columns works
+- [ ] Automation rules configured for PR workflow
+- [ ] Automation tested with sample PR
+
+**README Creation:**
+- [ ] README.md created with all markdown essentials
+- [ ] Project overview and features documented
+- [ ] Technology stack table included
+- [ ] Simple getting started instructions provided
+- [ ] Team information added
+- [ ] Badges and status indicators included
+
+**GitHub Pages Setup:**
+- [ ] index.html created with professional design in repository root
+- [ ] GitHub Pages enabled and deployed from main branch / (root)
+- [ ] Homepage accessible via generated URL
+- [ ] Clickable images implemented in both index.html and README
+- [ ] Homepage link added to README with title and clickable image
 
 ## 🎯 Practice Exercises
 
-1. **Project Management:**
-   - Create 10 sample issues using your templates
+1. **Advanced Project Management:**
+   - Create a sprint planning session
    - Practice moving issues through the workflow
-   - Set up a sprint planning session
+   - Set up milestone tracking
 
-2. **Documentation:**
-   - Customize the GitHub Pages theme
-   - Add team photos and bios
-   - Create API documentation pages
+2. **README Enhancement:**
+   - Add more badges and shields
+   - Include code examples
+   - Add troubleshooting section
 
-3. **Collaboration:**
-   - Invite team members to the project
-   - Practice reviewing and merging PRs
-   - Set up team notification preferences
+3. **Pages Customization:**
+   - Enhance the CSS styling
+   - Add more interactive elements
+   - Include project screenshots
 
 ## 🎉 Next Steps
 
@@ -531,9 +419,9 @@ With your project infrastructure ready, proceed to:
 
 - [GitHub Projects Documentation](https://docs.github.com/en/issues/planning-and-tracking-with-projects)
 - [GitHub Pages Guide](https://docs.github.com/en/pages)
-- [Jekyll Documentation](https://jekyllrb.com/docs/)
-- [Project Management Best Practices](https://www.atlassian.com/agile/project-management)
+- [Markdown Guide](https://www.markdownguide.org/)
+- [HTML/CSS Basics](https://developer.mozilla.org/en-US/docs/Web/HTML)
 
 ---
 
-**Pro Tip:** Regularly update your project documentation and keep your project board current to maintain team alignment!
+**Pro Tip:** Keep your project board updated regularly and use automation to streamline your workflow!
