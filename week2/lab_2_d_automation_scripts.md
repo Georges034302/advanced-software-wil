@@ -365,14 +365,14 @@ Remember: The best automation script is one you actually use! Start with simple 
 
 ### 3.4 Validation
 
-**Lab Complete! Check that you can:**
-- ✅ Create a new HTML project using your script
-- ✅ Create a new Python project using your script
-- ✅ Start a local web server to view HTML files
-- ✅ Run Python scripts easily with your runner script
-- ✅ Understand how each script works line by line
+**🎯 Lab Complete! Check that you can:**
+- 🌐 Create a new HTML project using your script
+- 🐍 Create a new Python project using your script
+- 🚀 Start a local web server to view HTML files
+- ▶️ Run Python scripts easily with your runner script
+- 🧠 Understand how each script works line by line
 
-**Next Lab Preview:**
+**🔮 Next Lab Preview:**
 In the next module, you'll learn about more advanced automation concepts and explore real-world development workflows.
 
 ---
