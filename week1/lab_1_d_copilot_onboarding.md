@@ -1,11 +1,13 @@
 # Lab 1D: Copilot Onboarding
 
 ## 🎯 Objectives
-- Master GitHub Copilot fundamentals and advanced features
-- Learn effective prompt engineering techniques
-- Practice AI-assisted coding workflows
-- Understand Copilot best practices and limitations
-- Integrate Copilot into professional development practices
+- Copilot overview (awareness, scope, capabilities)
+- Copilot usage (inline suggestions, terminal, chat)
+- Generating code from comments
+- Chat prompt templates (generate multiple Python scripts)
+- Method factorization (prompt Copilot to factorize code)
+- Generating comments for existing code
+- Generating unit tests for functions
 
 ## 📋 Prerequisites
 - Completed [Lab 1C: GitHub Projects](lab_1_c_github_projects.md)
@@ -13,109 +15,94 @@
 - VS Code with Copilot extension installed
 - Basic programming knowledge in multiple languages
 
-## 🚀 Copilot Fundamentals
+## � Copilot Overview
 
-### Step 1: Verifying Copilot Installation
+### What is GitHub Copilot?
+
+GitHub Copilot is an AI-powered code completion tool that helps developers write code faster and more efficiently.
+
+#### Awareness & Capabilities:
+- **AI Assistant**: Trained on billions of lines of public code
+- **Context-Aware**: Understands your current file and project context
+- **Multi-Language**: Supports Python, JavaScript, TypeScript, Java, C++, and many more
+- **Real-time**: Provides suggestions as you type
+- **Learning**: Adapts to your coding patterns and style
+
+#### Scope & Limitations:
+- **What it does well**: Boilerplate code, common patterns, documentation, tests
+- **What to review**: Security implications, performance optimization, business logic
+- **Not a replacement**: For understanding requirements, architecture decisions, or code review
+- **Privacy**: Be mindful of sensitive code and company policies
+
+#### Best Use Cases:
+- Writing utility functions and helper methods
+- Generating test cases and mock data
+- Creating documentation and comments
+- Learning new programming languages or frameworks
+- Speeding up repetitive coding tasks
+
+## 🚀 Copilot Usage Methods
+
+### Step 1: Inline Suggestions
+
+Copilot provides real-time code suggestions as you type.
 
 1. **Check Copilot Status:**
-   - Open VS Code
+   - Open VS Code/Codespaces
    - Look for the Copilot icon in the status bar
    - Should show "Copilot: Ready" or similar
 
-2. **Test Basic Functionality:**
+2. **Basic Inline Suggestions:**
    ```python
-   # Create a new file: test_copilot.py
+   # Create a new file: math_utils.py
    # Type this comment and wait for suggestions:
-   # Function to calculate the area of a circle
+   # Function to calculate the factorial of a number
+   def factorial(n):
+       # Copilot will suggest implementation
+       # Press Tab to accept, Esc to dismiss
    ```
 
-3. **Copilot Settings:**
-   - Open VS Code settings (Ctrl/Cmd + ,)
-   - Search for "copilot"
-   - Review and adjust settings as needed
+3. **Navigation Through Suggestions:**
+   ```python
+   # Function to check if a number is prime
+   def is_prime(n):
+       # Type the function signature and observe multiple suggestions
+       # Use Alt+] (next) and Alt+[ (previous) to cycle through options
+   ```
 
-### Step 2: Understanding Copilot Suggestions
+### Step 2: Terminal Integration
 
-#### Basic Suggestion Acceptance
+Copilot can assist with command-line operations and shell scripting.
 
-```python
-# Practice accepting suggestions
-# Type: "def fibonacci(n):" and observe suggestions
+1. **Terminal Copilot:**
+   - Open terminal in VS Code
+   - Start typing commands and observe suggestions
+   - Useful for complex command combinations
 
-def fibonacci(n):
-    # Copilot should suggest the implementation
-    # Press Tab to accept, or Esc to dismiss
-    pass
-```
+   ```bash
+   # Example: Git operations
+   git log --oneline --graph --all
+   
+   # Example: File operations
+   find . -name "*.py" -type f | grep -v __pycache__
+   ```
 
-#### Navigation Through Multiple Suggestions
+2. **Shell Script Assistance:**
+   ```bash
+   #!/bin/bash
+   # Script to backup project files
+   # Copilot can suggest complete script implementations
+   ```
 
-```javascript
-// Type: "function generateRandomPassword" and explore options
-// Use Alt+] (next suggestion) and Alt+[ (previous suggestion)
+### Step 3: Chat Interface
 
-function generateRandomPassword() {
-    // Cycle through different implementations
-}
-```
-
-### Step 3: Prompt Engineering Fundamentals
-
-#### Effective Comment-Driven Development
-
-**Poor Prompt Example:**
-```python
-# sort list
-def sort_data(data):
-    pass
-```
-
-**Better Prompt Example:**
-```python
-# Sort a list of dictionaries by a specific key in ascending order
-# Handle both string and numeric values
-# Return a new sorted list without modifying the original
-def sort_data(data, key_name, reverse=False):
-    pass
-```
-
-**Excellent Prompt Example:**
-```python
-# Sort a list of employee dictionaries by salary (numeric) in descending order
-# Input: [{"name": "John", "salary": 50000}, {"name": "Jane", "salary": 60000}]
-# Output: [{"name": "Jane", "salary": 60000}, {"name": "John", "salary": 50000}]
-# Handle edge cases: empty list, missing salary key, non-numeric salaries
-def sort_employees_by_salary(employees):
-    pass
-```
-
-#### Context-Aware Prompting
-
-```python
-# When working in a specific context, provide relevant information
-class UserAuthenticationService:
-    """Handles user authentication using JWT tokens and bcrypt password hashing"""
-    
-    def __init__(self, secret_key, token_expiry_hours=24):
-        self.secret_key = secret_key
-        self.token_expiry_hours = token_expiry_hours
-    
-    # Generate a JWT token for authenticated user with user_id and email claims
-    # Include expiration time and sign with secret key
-    # Return the token string or None if generation fails
-    def generate_token(self, user_id, email):
-        pass
-```
-
-### Step 4: Advanced Copilot Features
-
-#### Copilot Chat Integration
+The most powerful way to interact with Copilot for complex requests.
 
 1. **Open Copilot Chat:**
    - Use Ctrl+Shift+I (or Cmd+Shift+I on Mac)
    - Or click the chat icon in the activity bar
 
-2. **Practice Chat Commands:**
+2. **Chat Commands:**
    ```
    /explain - Explain selected code
    /fix - Suggest fixes for problems
@@ -126,29 +113,129 @@ class UserAuthenticationService:
 
 3. **Interactive Problem Solving:**
    ```
-   Chat Example:
-   "I need a Python function that reads a CSV file, filters rows where 
-   the 'status' column equals 'active', and returns a pandas DataFrame. 
-   Include error handling for file not found and invalid CSV format."
+   Example Chat:
+   "Create a Python function that reads a CSV file, calculates the average 
+   of a numeric column, and handles missing values gracefully."
    ```
 
-#### Copilot for Different Languages
+### Step 4: Generating Code from Comments
 
-**Python Example - Data Processing:**
+One of Copilot's strongest features is generating code from descriptive comments.
+
+#### Python Examples
+
+**Example 1: Data Processing Function**
 ```python
-# Create a data processing pipeline that:
-# 1. Reads JSON data from an API endpoint
-# 2. Validates the data structure
-# 3. Transforms date strings to datetime objects
-# 4. Filters out records older than 30 days
-# 5. Saves the result to a PostgreSQL database
-import requests
-import json
-from datetime import datetime, timedelta
-import psycopg2
-
-class DataProcessor:
+# Function to sort a list of dictionaries by a specific key in descending order
+# Handle both string and numeric values, return new list without modifying original
+def sort_dict_list(data, key_name, reverse=True):
+    # Copilot will generate the implementation
     pass
+
+# Function to filter a list of student records by GPA above threshold
+# Input: list of dicts with 'name', 'gpa', 'major' keys
+# Return: filtered list sorted by GPA descending
+def filter_students_by_gpa(students, gpa_threshold):
+    pass
+```
+
+**Example 2: File Operations**
+```python
+# Function to read a text file and count word frequency
+# Return dictionary with words as keys and counts as values
+# Handle file not found and encoding errors
+def count_word_frequency(filename):
+    pass
+
+# Function to merge multiple CSV files into one
+# Skip header rows except for the first file
+# Handle missing files gracefully
+def merge_csv_files(file_list, output_filename):
+    pass
+```
+
+#### TypeScript Examples
+
+**Example 1: Utility Functions**
+```typescript
+// Function to validate email format using regex
+// Return boolean indicating if email is valid
+function isValidEmail(email: string): boolean {
+    // Copilot will suggest regex implementation
+}
+
+// Function to calculate the distance between two coordinates
+// Parameters: lat1, lon1, lat2, lon2 (all numbers)
+// Return distance in kilometers
+function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+    // Implementation will be suggested
+}
+```
+
+**Example 2: Array Operations**
+```typescript
+// Function to group array of objects by a specific property
+// Generic function that works with any object type
+function groupBy<T>(array: T[], key: keyof T): Record<string, T[]> {
+    // Copilot will suggest implementation
+}
+
+// Function to find the most frequent element in an array
+// Return the element and its count
+function findMostFrequent<T>(array: T[]): { element: T; count: number } | null {
+    // Implementation will be generated
+}
+```
+
+### Step 5: Chat Prompt Templates (Generate Multiple Python Scripts)
+
+Use Copilot Chat to generate complete Python scripts for various scenarios.
+
+#### Template 1: Data Analysis Script
+```
+Chat Prompt:
+"Generate a Python script that:
+1. Reads data from a CSV file named 'sales_data.csv'
+2. Calculates monthly sales totals
+3. Identifies the top 5 selling products
+4. Creates a simple bar chart of monthly sales
+5. Saves results to 'sales_report.txt'
+Include error handling and comments."
+```
+
+#### Template 2: File Management Script
+```
+Chat Prompt:
+"Create a Python script that:
+1. Scans a directory for duplicate files (same content, different names)
+2. Creates a log of all duplicates found
+3. Offers option to delete duplicates or move them to a backup folder
+4. Includes progress bar for large directories
+5. Has command-line arguments for source directory and action"
+```
+
+#### Template 3: Web Scraping Script
+```
+Chat Prompt:
+"Write a Python script that:
+1. Scrapes weather data from a local weather station webpage
+2. Extracts temperature, humidity, and wind speed
+3. Stores data in SQLite database with timestamps
+4. Runs every hour using scheduled tasks
+5. Includes retry logic for failed requests
+6. Sends email alert if temperature exceeds threshold"
+```
+
+#### Template 4: System Monitoring Script
+```
+Chat Prompt:
+"Generate a Python monitoring script that:
+1. Checks disk space usage on all drives
+2. Monitors CPU and memory usage
+3. Checks if specific services are running
+4. Logs all metrics to rotating log files
+5. Sends alerts when thresholds are exceeded
+6. Creates daily summary reports"
 ```
 
 **JavaScript/TypeScript Example - API Development:**
@@ -176,161 +263,247 @@ function createAuthMiddleware(options: AuthMiddlewareOptions) {
 **Bash/Shell Scripting Example:**
 ```bash
 #!/bin/bash
-# Create a deployment script that:
-# 1. Validates environment variables (DB_HOST, API_KEY, etc.)
-# 2. Builds a Docker image with proper tagging
-# 3. Pushes to Azure Container Registry
-# 4. Updates Azure App Service with new image
-# 5. Performs health checks and rollback on failure
-# 6. Sends Slack notification with deployment status
+# Create a file backup and cleanup script that:
+# 1. Creates timestamped backup of important directories
+# 2. Compresses old log files older than 7 days
+# 3. Removes temporary files and empty directories
+# 4. Checks disk space and warns if low
+# 5. Generates a summary report of actions taken
+# 6. Logs all activities with timestamps
 
 set -euo pipefail
 
 # Script implementation
 ```
 
-### Step 5: Copilot Best Practices
+### Step 6: Method Factorization
 
-#### Writing Effective Prompts
+Use Copilot to help refactor and factorize complex code into smaller, more manageable functions.
 
-1. **Be Specific and Detailed:**
-   ```python
-   # ❌ Bad: Create a function
-   # ✅ Good: Create a function that validates email addresses using regex
-   # ✅ Better: Create a function that validates email addresses using RFC 5322 regex pattern, returns boolean, handles None input gracefully
-   ```
-
-2. **Provide Context and Examples:**
-   ```python
-   # ❌ Bad: Parse JSON
-   # ✅ Good: Parse JSON response from REST API
-   # ✅ Better: Parse JSON response from user authentication API, extract user_id and permissions, handle malformed JSON with appropriate error messages
-   # Example input: {"user_id": 123, "permissions": ["read", "write"], "expires_at": "2024-12-31T23:59:59Z"}
-   ```
-
-3. **Include Error Handling Requirements:**
-   ```python
-   # File upload handler that:
-   # - Accepts only PDF and DOCX files (validate MIME type)
-   # - Limits file size to 10MB
-   # - Scans for malware using ClamAV
-   # - Saves to AWS S3 with UUID filename
-   # - Returns upload URL or error message
-   # Handle: file too large, invalid format, S3 connection failure, malware detected
-   ```
-
-#### Code Review with Copilot
-
+#### Example 1: Refactoring a Large Python Function
 ```python
-# Use Copilot to review this function for potential issues
-def process_user_data(user_input):
-    data = eval(user_input)  # Security issue!
-    result = data['items'][0]  # Potential KeyError!
-    return result.upper()  # Potential AttributeError!
-
-# Ask Copilot Chat: "/fix Review this function for security and error handling issues"
-```
-
-#### Testing with Copilot
-
-```python
-# Generate comprehensive unit tests for this function
-def calculate_discount(price, discount_percent, user_tier):
-    """
-    Calculate discounted price based on discount percentage and user tier
+# Original complex function that needs factorization
+def process_user_data(users_data):
+    """Complex function that does too many things"""
+    # Validation logic
+    validated_users = []
+    for user in users_data:
+        if user.get('email') and '@' in user['email']:
+            if user.get('age') and isinstance(user['age'], int) and user['age'] >= 18:
+                if user.get('name') and len(user['name']) > 2:
+                    validated_users.append(user)
     
-    Args:
-        price (float): Original price
-        discount_percent (float): Discount percentage (0-100)
-        user_tier (str): User tier ('bronze', 'silver', 'gold', 'platinum')
+    # Data transformation
+    for user in validated_users:
+        user['email'] = user['email'].lower().strip()
+        user['name'] = user['name'].title().strip()
+        user['age_group'] = 'young' if user['age'] < 30 else 'adult' if user['age'] < 60 else 'senior'
     
-    Returns:
-        float: Final price after discount and tier bonus
-    """
-    # Ask Copilot to generate tests covering:
-    # - Valid inputs with different tiers
-    # - Edge cases (0 price, 100% discount)
-    # - Invalid inputs (negative values, invalid tier)
-    # - Boundary conditions
-    pass
+    # Sorting and grouping
+    validated_users.sort(key=lambda x: (x['age_group'], x['name']))
+    grouped_users = {}
+    for user in validated_users:
+        age_group = user['age_group']
+        if age_group not in grouped_users:
+            grouped_users[age_group] = []
+        grouped_users[age_group].append(user)
+    
+    return grouped_users
 
-# Type: "import pytest" and let Copilot suggest test structure
+# Prompt Copilot to factorize this function:
+# "Refactor this function into smaller, single-responsibility functions.
+# Create separate functions for validation, data transformation, and grouping."
 ```
 
-### Step 6: Copilot Workflows for Different Scenarios
+#### Example 2: TypeScript Class Refactoring
+```typescript
+// Original complex class that needs factorization
+class DataProcessor {
+    processData(rawData: any[]): ProcessedData[] {
+        // Input validation
+        const validData = rawData.filter(item => {
+            return item && 
+                   typeof item.id === 'number' && 
+                   typeof item.name === 'string' && 
+                   item.name.length > 0 &&
+                   typeof item.value === 'number' &&
+                   item.value >= 0;
+        });
 
-#### API Development Workflow
+        // Data transformation
+        const transformedData = validData.map(item => ({
+            ...item,
+            name: item.name.trim().toLowerCase(),
+            normalizedValue: item.value / 100,
+            category: item.value < 50 ? 'low' : item.value < 100 ? 'medium' : 'high',
+            timestamp: new Date().toISOString()
+        }));
 
-```python
-# 1. Start with API specification comment
-"""
-REST API endpoint for user management:
-POST /api/users - Create new user
-GET /api/users/{id} - Get user by ID
-PUT /api/users/{id} - Update user
-DELETE /api/users/{id} - Delete user
+        // Statistical calculations
+        const total = transformedData.reduce((sum, item) => sum + item.value, 0);
+        const average = total / transformedData.length;
+        const withStats = transformedData.map(item => ({
+            ...item,
+            percentageOfTotal: (item.value / total) * 100,
+            deviationFromMean: item.value - average
+        }));
 
-Request/Response format:
-{
-    "id": "uuid",
-    "email": "user@example.com",
-    "name": "John Doe",
-    "created_at": "2024-01-01T00:00:00Z",
-    "updated_at": "2024-01-01T00:00:00Z"
-}
-"""
-
-# 2. Let Copilot suggest Flask/FastAPI implementation
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-import uuid
-from datetime import datetime
-```
-
-#### Database Integration Workflow
-
-```sql
--- 1. Start with schema comments
--- User management database schema for e-commerce platform
--- Tables: users, orders, products, order_items
--- Relationships: users -> orders (1:many), orders -> order_items (1:many), products -> order_items (1:many)
--- Requirements: UUID primary keys, timestamps, soft delete support
-
--- 2. Let Copilot suggest table structures
-CREATE TABLE users (
-    -- Copilot will suggest appropriate columns
-);
-```
-
-#### Frontend Component Workflow
-
-```tsx
-// 1. Describe component requirements
-/**
- * UserProfile Component Requirements:
- * - Display user avatar, name, email, and join date
- * - Edit mode with form validation
- * - Avatar upload with preview
- * - Save/Cancel buttons with loading states
- * - Error handling and success messages
- * - Responsive design (mobile-first)
- * - Accessibility compliance (ARIA labels, keyboard navigation)
- */
-
-import React, { useState, useEffect } from 'react';
-
-interface UserProfileProps {
-    userId: string;
-    onSave?: (userData: UserData) => Promise<void>;
+        return withStats;
+    }
 }
 
-// 2. Let Copilot build the component
-export const UserProfile: React.FC<UserProfileProps> = ({ userId, onSave }) => {
-    // Component implementation
-};
+// Prompt Copilot Chat:
+// "Refactor this class method into smaller private methods. Create separate methods for:
+// 1. Input validation
+// 2. Data transformation
+// 3. Statistical calculations
+// 4. Adding computed fields"
 ```
 
-### Step 7: Copilot Limitations and Considerations
+### Step 7: Generating Comments for Existing Code
+
+Copilot can help you generate comprehensive comments and documentation for existing code.
+
+#### Python Function Documentation
+```python
+# Existing function without comments - ask Copilot to add documentation
+def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+
+# Prompt: "Add comprehensive docstring and inline comments to this function"
+# Use /doc command in Copilot Chat
+```
+
+#### TypeScript Class Documentation
+```typescript
+// Existing class without documentation
+class Calculator {
+    private history: number[] = [];
+    
+    add(a: number, b: number): number {
+        const result = a + b;
+        this.history.push(result);
+        return result;
+    }
+    
+    multiply(a: number, b: number): number {
+        const result = a * b;
+        this.history.push(result);
+        return result;
+    }
+    
+    getHistory(): number[] {
+        return [...this.history];
+    }
+    
+    clearHistory(): void {
+        this.history = [];
+    }
+}
+
+// Prompt: "Add JSDoc comments to this class including parameter types, return types, and examples"
+```
+
+### Step 8: Generating Unit Tests for Functions
+
+Use Copilot to generate comprehensive unit tests for your functions.
+
+#### Python Unit Tests Example
+```python
+# Function to test
+def calculate_discount(price: float, discount_percent: float, user_tier: str) -> float:
+    """Calculate discounted price based on discount percentage and user tier"""
+    if price < 0 or discount_percent < 0 or discount_percent > 100:
+        raise ValueError("Invalid input values")
+    
+    tier_multipliers = {
+        'bronze': 1.0,
+        'silver': 1.1,
+        'gold': 1.2,
+        'platinum': 1.3
+    }
+    
+    if user_tier not in tier_multipliers:
+        raise ValueError("Invalid user tier")
+    
+    base_discount = price * (discount_percent / 100)
+    tier_bonus = base_discount * (tier_multipliers[user_tier] - 1)
+    total_discount = base_discount + tier_bonus
+    
+    return max(0, price - total_discount)
+
+# Prompt for Copilot Chat:
+# "Generate comprehensive pytest unit tests for this function including:
+# - Valid inputs with different tiers
+# - Edge cases (0 price, 100% discount)
+# - Invalid inputs (negative values, invalid tier)
+# - Boundary conditions
+# Use fixtures and parametrize where appropriate"
+```
+
+#### TypeScript Jest Tests Example
+```typescript
+// Function to test
+function validateEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+function formatCurrency(amount: number, currency: string = 'USD'): string {
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: currency
+    }).format(amount);
+}
+
+// Prompt for Copilot Chat:
+// "Generate Jest unit tests for these functions including:
+// - Valid email formats and invalid ones
+// - Different currency codes and amounts
+// - Edge cases and error conditions
+// - Mock implementations where needed"
+```
+
+#### Advanced Testing with Mocks
+```python
+# Function that needs mocking
+import requests
+from typing import Dict, Any
+
+def fetch_user_data(user_id: int) -> Dict[str, Any]:
+    """Fetch user data from external service"""
+    response = requests.get(f"https://jsonplaceholder.typicode.com/users/{user_id}")
+    if response.status_code == 200:
+        return response.json()
+    else:
+        raise Exception(f"Failed to fetch user data: {response.status_code}")
+
+def process_user(user_id: int) -> str:
+    """Process user data and return formatted string"""
+    try:
+        user_data = fetch_user_data(user_id)
+        return f"User: {user_data['name']} ({user_data['email']})"
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+# Prompt for Copilot Chat:
+# "Generate pytest tests for these functions including:
+# - Mock the requests.get call
+# - Test successful responses and error cases
+# - Use pytest fixtures and parametrize
+# - Test both functions with proper mocking"
+```
+
+### Step 9: Copilot Best Practices and Limitations
 
 #### Understanding Limitations
 
@@ -387,45 +560,43 @@ def encrypt_sensitive_data(data: str, key: str) -> str:
 
 Complete these exercises to validate your Copilot skills:
 
-### Exercise 1: Web Scraping with Error Handling
+### Exercise 1: Data Processing Pipeline
 ```python
-# Create a web scraper that:
-# 1. Fetches product data from an e-commerce API
-# 2. Handles rate limiting with exponential backoff
-# 3. Parses HTML/JSON responses
-# 4. Stores data in SQLite database
-# 5. Includes comprehensive error handling
-# 6. Generates detailed logs
+# Create a data processing script that:
+# 1. Reads multiple CSV files from a directory
+# 2. Validates data integrity and handles missing values
+# 3. Performs statistical analysis (mean, median, std dev)
+# 4. Generates data visualization charts
+# 5. Exports results to Excel with multiple sheets
+# 6. Includes comprehensive error handling and logging
 
-# Let Copilot help, then review and improve the suggestions
+# Use Copilot to generate the solution, then add unit tests
 ```
 
-### Exercise 2: RESTful API with Authentication
-```javascript
-// Build a Node.js Express API with:
-// 1. JWT authentication middleware
-// 2. CRUD operations for a blog system
-// 3. Input validation and sanitization
-// 4. Database integration (MongoDB/PostgreSQL)
-// 5. Comprehensive error handling
-// 6. API documentation generation
+### Exercise 2: File Management Utility
+```python
+# Build a file organization tool that:
+# 1. Scans directories recursively for specific file types
+# 2. Organizes files by date, size, or file type
+# 3. Detects and handles duplicate files
+# 4. Creates backup copies before moving files
+# 5. Generates detailed reports of actions taken
+# 6. Includes command-line interface with arguments
 
-// Use Copilot for rapid development, then enhance with best practices
+# Use Copilot for rapid development, then enhance with best practices
 ```
 
-### Exercise 3: DevOps Automation Script
-```bash
-#!/bin/bash
-# Create a deployment automation script that:
-# 1. Validates environment and dependencies
-# 2. Builds and tests application
-# 3. Creates Docker images
-# 4. Deploys to staging environment
-# 5. Runs integration tests
-# 6. Promotes to production on success
-# 7. Includes rollback capabilities
+### Exercise 3: Algorithm Implementation and Testing
+```python
+# Implement and test sorting algorithms:
+# 1. Quick sort with random pivot selection
+# 2. Merge sort with optimization for small arrays
+# 3. Heap sort implementation
+# 4. Performance comparison with built-in sort
+# 5. Comprehensive test suite with edge cases
+# 6. Documentation with time complexity analysis
 
-# Use Copilot for script generation, then add robust error handling
+# Use Copilot to generate implementations, then create thorough tests
 ```
 
 ## 🎯 Professional Integration
@@ -461,14 +632,14 @@ Complete these exercises to validate your Copilot skills:
 ## 🔍 Validation Checklist
 
 Your Copilot skills are ready when you can:
-- [ ] Write effective prompts that generate quality code
-- [ ] Navigate and evaluate multiple suggestions
-- [ ] Use Copilot Chat for complex problem solving
-- [ ] Integrate Copilot into your development workflow
-- [ ] Review and improve AI-generated code
-- [ ] Apply Copilot across multiple programming languages
-- [ ] Understand and work within Copilot's limitations
-- [ ] Use Copilot for testing, documentation, and debugging
+- [ ] Understand Copilot's capabilities, scope, and limitations
+- [ ] Use Copilot through inline suggestions, terminal, and chat interface
+- [ ] Generate code effectively from descriptive comments
+- [ ] Create multiple Python scripts using chat prompt templates
+- [ ] Use Copilot to factorize complex methods into smaller functions
+- [ ] Generate comprehensive comments and documentation for existing code
+- [ ] Create thorough unit tests for functions using Copilot assistance
+- [ ] Review and improve AI-generated code for quality and security
 
 ## 🎉 Next Steps
 

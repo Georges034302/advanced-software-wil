@@ -134,7 +134,6 @@
 
 ### Step 4: Create Project README (Markdown Essentials)
 
-1. **Create Comprehensive README:**
    ```markdown
    # Advanced Software WIL Project
    
@@ -148,14 +147,14 @@
    - GitHub Pages deployment
    - Basic web development with HTML/CSS
    
-   ## 🚀 Features
+   ### 🚀 Features
    
    - **Project Management:** GitHub Projects with automated workflows
    - **Documentation:** Comprehensive README with markdown essentials
    - **Web Presence:** Professional homepage with GitHub Pages
    - **Version Control:** Git workflows and collaboration practices
    
-   ## 🛠 Technology Stack
+   ### 🛠 Technology Stack
    
    | Technology | Purpose |
    |------------|---------|
@@ -166,20 +165,18 @@
    | Markdown | Documentation |
    
    ## 📁 Project Structure
-   
-   ```bash
+     
    advanced-software-wil/
    ├── index.html         # Main homepage
    └── README.md          # Project documentation
-   ```
-   
-   ### Quick Start
+
+   ## Quick Start
    
    1. **Clone the repository:**
-      ```bash
+      
       git clone https://github.com/your-username/advanced-software-wil.git
       cd advanced-software-wil
-      ```
+      
    
    2. **Open index.html:**
       - Open `index.html` in your web browser
@@ -218,17 +215,6 @@
    
    This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
    ```
-
-2. **Markdown Essentials Used:**
-   - **Headers:** `#`, `##`, `###`
-   - **Emphasis:** `**bold**`, `*italic*`
-   - **Links:** `[text](url)`
-   - **Images:** `![alt](url)`
-   - **Code blocks:** Triple backticks
-   - **Tables:** Pipe syntax
-   - **Lists:** `-` and numbered
-   - **Badges:** Shield.io integration
-   - **Blockquotes:** `>`
 
 ### Step 5: GitHub Pages Setup and Integration
 
