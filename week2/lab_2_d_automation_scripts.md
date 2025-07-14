@@ -1,714 +1,677 @@
-# Lab 2D: Build Automation and Development Environment Setup
+# Lab 2D: Development Workflow Automation
 
 ## 🎯 Learning Objectives
 By the end of this lab, you will be able to:
-- Create automated build and deployment scripts
-- Set up reproducible development environments
-- Implement CI/CD preparation scripts
-- Use GitHub Copilot to generate complex automation workflows
-- Apply advanced scripting techniques for production environments
+- Create simple automation scripts for common development tasks
+- Build file processing and batch operation scripts
+- Automate project setup and organization
+- Use GitHub Copilot to generate helpful workflow scripts
+- Apply bash scripting to solve real development problems
 
 ## 📋 Prerequisites
 - Completion of Labs 2A, 2B, and 2C
 - Understanding of bash scripting fundamentals
-- Basic knowledge of development workflows
+- Basic file operations knowledge
 - GitHub Copilot enabled
 
 ---
 
-## Part 1: Development Environment Automation
+## Part 1: Project Setup Automation
 
-### 1.1 Environment Setup Scripts
+### 1.1 Simple Project Template Generator
 
 **💡 Copilot Prompt:**
 ```
-Create a comprehensive development environment setup script that installs common development tools (git, node, python, docker) with version checking and cross-platform support.
+Create a simple bash script that generates basic project structures for web development projects (HTML/CSS/JS) with common files and folders.
 ```
 
 ```bash
 #!/bin/bash
-# Development Environment Setup Script
-# File: setup_dev_env.sh
+# Project Setup Script
+# File: setup_project.sh
 
-set -euo pipefail
-
-# Configuration
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-LOG_FILE="$HOME/dev_setup.log"
-REQUIRED_TOOLS=("git" "curl" "wget" "unzip")
-
-# Color codes for output
-RED='\033[0;31m'
+# Colors for output
 GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-# Logging function
-log() {
-    local level=$1
-    shift
-    local message="$@"
-    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
-    echo -e "${timestamp} [${level}] ${message}" | tee -a "$LOG_FILE"
+# Function to print colored output
+print_message() {
+    local color=$1
+    local message=$2
+    echo -e "${color}${message}${NC}"
 }
 
-# Check if running on supported OS
-check_os() {
-    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        OS="linux"
-        DISTRO=$(lsb_release -si 2>/dev/null || echo "Unknown")
-    elif [[ "$OSTYPE" == "darwin"* ]]; then
-        OS="macos"
-        DISTRO="macOS"
-    else
-        log "ERROR" "Unsupported operating system: $OSTYPE"
-        exit 1
-    fi
-    log "INFO" "Detected OS: $OS ($DISTRO)"
-}
-
-# Check if tool is installed
-check_tool() {
-    local tool=$1
-    if command -v "$tool" &> /dev/null; then
-        local version=$(${tool} --version 2>/dev/null | head -1 || echo "Unknown version")
-        log "INFO" "$tool is installed: $version"
-        return 0
-    else
-        log "WARN" "$tool is not installed"
-        return 1
-    fi
-}
-
-# Install Node.js and npm
-install_nodejs() {
-    log "INFO" "Installing Node.js..."
+# Create basic web project structure
+create_web_project() {
+    local project_name=$1
     
-    if check_tool "node"; then
-        log "INFO" "Node.js already installed"
-        return 0
-    fi
+    print_message $BLUE "Creating web project: $project_name"
     
-    # Install Node Version Manager (nvm)
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    # Create main directories
+    mkdir -p "$project_name"/{css,js,images,docs}
     
-    # Install latest LTS Node.js
-    nvm install --lts
-    nvm use --lts
-    nvm alias default lts/*
-    
-    log "INFO" "Node.js installation completed"
-}
-
-# Install Python and pip
-install_python() {
-    log "INFO" "Installing Python..."
-    
-    if check_tool "python3"; then
-        log "INFO" "Python3 already installed"
-        return 0
-    fi
-    
-    case $OS in
-        "linux")
-            case $DISTRO in
-                "Ubuntu"|"Debian")
-                    sudo apt update
-                    sudo apt install -y python3 python3-pip python3-venv
-                    ;;
-                "CentOS"|"RHEL"|"Fedora")
-                    sudo yum install -y python3 python3-pip
-                    ;;
-                *)
-                    log "ERROR" "Unsupported Linux distribution: $DISTRO"
-                    return 1
-                    ;;
-            esac
-            ;;
-        "macos")
-            if command -v brew &> /dev/null; then
-                brew install python3
-            else
-                log "ERROR" "Homebrew not found. Please install Homebrew first."
-                return 1
-            fi
-            ;;
-    esac
-    
-    log "INFO" "Python installation completed"
-}
-
-# Install Docker
-install_docker() {
-    log "INFO" "Installing Docker..."
-    
-    if check_tool "docker"; then
-        log "INFO" "Docker already installed"
-        return 0
-    fi
-    
-    case $OS in
-        "linux")
-            # Official Docker installation script
-            curl -fsSL https://get.docker.com -o get-docker.sh
-            sudo sh get-docker.sh
-            sudo usermod -aG docker $USER
-            rm get-docker.sh
-            ;;
-        "macos")
-            log "INFO" "Please install Docker Desktop for Mac from https://docker.com"
-            ;;
-    esac
-    
-    log "INFO" "Docker installation completed"
-}
-
-# Setup Git configuration
-setup_git() {
-    log "INFO" "Setting up Git configuration..."
-    
-    if ! check_tool "git"; then
-        case $OS in
-            "linux")
-                sudo apt install -y git || sudo yum install -y git
-                ;;
-            "macos")
-                xcode-select --install
-                ;;
-        esac
-    fi
-    
-    # Configure Git if not already configured
-    if [ -z "$(git config --global user.name 2>/dev/null)" ]; then
-        read -p "Enter your Git username: " git_username
-        git config --global user.name "$git_username"
-    fi
-    
-    if [ -z "$(git config --global user.email 2>/dev/null)" ]; then
-        read -p "Enter your Git email: " git_email
-        git config --global user.email "$git_email"
-    fi
-    
-    # Set up useful Git aliases
-    git config --global alias.st status
-    git config --global alias.co checkout
-    git config --global alias.br branch
-    git config --global alias.up "pull --rebase"
-    git config --global alias.lg "log --oneline --graph --decorate"
-    
-    log "INFO" "Git configuration completed"
-}
-
-# Install VS Code extensions
-install_vscode_extensions() {
-    log "INFO" "Installing VS Code extensions..."
-    
-    if ! check_tool "code"; then
-        log "WARN" "VS Code not found, skipping extension installation"
-        return 0
-    fi
-    
-    local extensions=(
-        "ms-vscode.vscode-typescript-next"
-        "ms-python.python"
-        "ms-vscode.vscode-json"
-        "redhat.vscode-yaml"
-        "ms-azuretools.vscode-docker"
-        "GitHub.copilot"
-        "ms-vscode.powershell"
-    )
-    
-    for ext in "${extensions[@]}"; do
-        code --install-extension "$ext" --force
-    done
-    
-    log "INFO" "VS Code extensions installation completed"
-}
-
-# Main execution
-main() {
-    log "INFO" "Starting development environment setup..."
-    
-    check_os
-    
-    # Check required tools
-    for tool in "${REQUIRED_TOOLS[@]}"; do
-        if ! check_tool "$tool"; then
-            log "ERROR" "Required tool $tool is missing. Please install it first."
-            exit 1
-        fi
-    done
-    
-    # Install development tools
-    setup_git
-    install_python
-    install_nodejs
-    install_docker
-    install_vscode_extensions
-    
-    log "INFO" "Development environment setup completed!"
-    log "INFO" "Please restart your terminal or run 'source ~/.bashrc' to apply changes."
-}
-
-# Script usage
-usage() {
-    cat << EOF
-Development Environment Setup Script
-
-Usage: $0 [OPTIONS]
-
-Options:
-    -h, --help          Show this help message
-    -l, --log-file      Specify log file location (default: $LOG_FILE)
-    --skip-docker       Skip Docker installation
-    --skip-vscode       Skip VS Code extensions installation
-
-Examples:
-    $0                  # Full installation
-    $0 --skip-docker    # Install everything except Docker
-    $0 -l /tmp/setup.log # Use custom log file
-EOF
-}
-
-# Parse command line arguments
-while [[ $# -gt 0 ]]; do
-    case $1 in
-        -h|--help)
-            usage
-            exit 0
-            ;;
-        -l|--log-file)
-            LOG_FILE="$2"
-            shift 2
-            ;;
-        --skip-docker)
-            SKIP_DOCKER=true
-            shift
-            ;;
-        --skip-vscode)
-            SKIP_VSCODE=true
-            shift
-            ;;
-        *)
-            echo "Unknown option: $1"
-            usage
-            exit 1
-            ;;
-    esac
-done
-
-# Run main function
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    main "$@"
-fi
-```
-
-**📝 Exercise 1: Customize the environment script**
-Modify the above script to include tools specific to your development stack (e.g., Java, Go, Rust, specific databases).
-
----
-
-## Part 2: Build Automation Scripts
-
-### 2.1 Universal Build Script
-
-**💡 Copilot Prompt:**
-```
-Create a universal build script that detects project type (Node.js, Python, Java, etc.) and runs appropriate build commands with dependency management, testing, and packaging.
-```
-
-```bash
-#!/bin/bash
-# Universal Build Script
-# File: build.sh
-
-set -euo pipefail
-
-# Configuration
-BUILD_DIR="./build"
-DIST_DIR="./dist"
-LOG_FILE="./build.log"
-VERBOSE=false
-CLEAN=false
-TEST=true
-PACKAGE=false
-
-# Project detection
-detect_project_type() {
-    if [ -f "package.json" ]; then
-        echo "nodejs"
-    elif [ -f "requirements.txt" ] || [ -f "pyproject.toml" ] || [ -f "setup.py" ]; then
-        echo "python"
-    elif [ -f "pom.xml" ]; then
-        echo "maven"
-    elif [ -f "build.gradle" ] || [ -f "build.gradle.kts" ]; then
-        echo "gradle"
-    elif [ -f "Cargo.toml" ]; then
-        echo "rust"
-    elif [ -f "go.mod" ]; then
-        echo "go"
-    elif [ -f "Dockerfile" ]; then
-        echo "docker"
-    else
-        echo "unknown"
-    fi
-}
-
-# Logging
-log() {
-    local level=$1
-    shift
-    local message="$@"
-    local timestamp=$(date '+%H:%M:%S')
-    
-    if [ "$VERBOSE" = true ] || [ "$level" != "DEBUG" ]; then
-        echo "[$timestamp] [$level] $message" | tee -a "$LOG_FILE"
-    fi
-}
-
-# Clean build artifacts
-clean_build() {
-    log "INFO" "Cleaning build artifacts..."
-    
-    rm -rf "$BUILD_DIR" "$DIST_DIR"
-    
-    case $PROJECT_TYPE in
-        "nodejs")
-            rm -rf node_modules/.cache
-            ;;
-        "python")
-            find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
-            find . -type f -name "*.pyc" -delete 2>/dev/null || true
-            rm -rf .pytest_cache build dist *.egg-info
-            ;;
-        "java"|"maven")
-            mvn clean &>/dev/null || true
-            ;;
-        "gradle")
-            ./gradlew clean &>/dev/null || true
-            ;;
-        "rust")
-            cargo clean &>/dev/null || true
-            ;;
-        "go")
-            go clean -cache &>/dev/null || true
-            ;;
-    esac
-    
-    log "INFO" "Clean completed"
-}
-
-# Install dependencies
-install_dependencies() {
-    log "INFO" "Installing dependencies for $PROJECT_TYPE project..."
-    
-    case $PROJECT_TYPE in
-        "nodejs")
-            if [ -f "package-lock.json" ]; then
-                npm ci
-            else
-                npm install
-            fi
-            ;;
-        "python")
-            if [ -f "requirements.txt" ]; then
-                pip install -r requirements.txt
-            elif [ -f "pyproject.toml" ]; then
-                pip install -e .
-            fi
-            ;;
-        "maven")
-            mvn dependency:resolve
-            ;;
-        "gradle")
-            ./gradlew build --refresh-dependencies
-            ;;
-        "rust")
-            cargo fetch
-            ;;
-        "go")
-            go mod download
-            ;;
-    esac
-    
-    log "INFO" "Dependencies installed"
-}
-
-# Run tests
-run_tests() {
-    if [ "$TEST" = false ]; then
-        log "INFO" "Skipping tests"
-        return 0
-    fi
-    
-    log "INFO" "Running tests..."
-    
-    case $PROJECT_TYPE in
-        "nodejs")
-            npm test
-            ;;
-        "python")
-            if command -v pytest &> /dev/null; then
-                pytest
-            elif [ -f "test.py" ]; then
-                python test.py
-            else
-                python -m unittest discover
-            fi
-            ;;
-        "maven")
-            mvn test
-            ;;
-        "gradle")
-            ./gradlew test
-            ;;
-        "rust")
-            cargo test
-            ;;
-        "go")
-            go test ./...
-            ;;
-    esac
-    
-    log "INFO" "Tests completed"
-}
-
-# Build project
-build_project() {
-    log "INFO" "Building $PROJECT_TYPE project..."
-    
-    mkdir -p "$BUILD_DIR"
-    
-    case $PROJECT_TYPE in
-        "nodejs")
-            if grep -q "\"build\":" package.json; then
-                npm run build
-            else
-                log "WARN" "No build script found in package.json"
-            fi
-            ;;
-        "python")
-            if [ -f "setup.py" ]; then
-                python setup.py build
-            else
-                log "INFO" "No build step required for Python project"
-            fi
-            ;;
-        "maven")
-            mvn compile
-            ;;
-        "gradle")
-            ./gradlew build
-            ;;
-        "rust")
-            cargo build --release
-            ;;
-        "go")
-            go build -o "$BUILD_DIR/" ./...
-            ;;
-        "docker")
-            docker build -t $(basename $(pwd)):latest .
-            ;;
-    esac
-    
-    log "INFO" "Build completed"
-}
-
-# Package project
-package_project() {
-    if [ "$PACKAGE" = false ]; then
-        log "INFO" "Skipping packaging"
-        return 0
-    fi
-    
-    log "INFO" "Packaging project..."
-    
-    mkdir -p "$DIST_DIR"
-    
-    case $PROJECT_TYPE in
-        "nodejs")
-            if grep -q "\"pack\":" package.json; then
-                npm run pack
-            else
-                npm pack --pack-destination="$DIST_DIR"
-            fi
-            ;;
-        "python")
-            python setup.py sdist bdist_wheel
-            mv dist/* "$DIST_DIR/" 2>/dev/null || true
-            ;;
-        "maven")
-            mvn package
-            cp target/*.jar "$DIST_DIR/" 2>/dev/null || true
-            ;;
-        "gradle")
-            ./gradlew assemble
-            cp build/libs/*.jar "$DIST_DIR/" 2>/dev/null || true
-            ;;
-        "rust")
-            cargo build --release
-            cp target/release/* "$DIST_DIR/" 2>/dev/null || true
-            ;;
-        "go")
-            go build -o "$DIST_DIR/" ./...
-            ;;
-    esac
-    
-    log "INFO" "Packaging completed"
-}
-
-# Generate build report
-generate_report() {
-    local end_time=$(date)
-    local build_status="SUCCESS"
-    
-    cat > build-report.html << EOF
+    # Create basic HTML file
+    cat > "$project_name/index.html" << EOF
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Build Report</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        .success { color: green; }
-        .error { color: red; }
-        .info { color: blue; }
-        pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$project_name</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Build Report</h1>
-    <p><strong>Project Type:</strong> $PROJECT_TYPE</p>
-    <p><strong>Build Time:</strong> $end_time</p>
-    <p><strong>Status:</strong> <span class="success">$build_status</span></p>
+    <header>
+        <h1>Welcome to $project_name</h1>
+    </header>
     
-    <h2>Build Log</h2>
-    <pre>$(cat "$LOG_FILE")</pre>
+    <main>
+        <p>This is your new project!</p>
+    </main>
     
-    <h2>Build Artifacts</h2>
-    <ul>
-EOF
-
-    if [ -d "$BUILD_DIR" ]; then
-        find "$BUILD_DIR" -type f | while read file; do
-            echo "        <li>$file</li>" >> build-report.html
-        done
-    fi
+    <footer>
+        <p>&copy; 2025 $project_name</p>
+    </footer>
     
-    if [ -d "$DIST_DIR" ]; then
-        find "$DIST_DIR" -type f | while read file; do
-            echo "        <li>$file</li>" >> build-report.html
-        done
-    fi
-    
-    cat >> build-report.html << EOF
-    </ul>
+    <script src="js/script.js"></script>
 </body>
 </html>
 EOF
-    
-    log "INFO" "Build report generated: build-report.html"
+
+    # Create basic CSS file
+    cat > "$project_name/css/style.css" << EOF
+/* Basic styles for $project_name */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-# Main build process
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+header {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+
+main {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+footer {
+    background-color: #f8f9fa;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+}
+EOF
+
+    # Create basic JavaScript file
+    cat > "$project_name/js/script.js" << EOF
+// JavaScript for $project_name
+console.log('Welcome to $project_name!');
+
+// Add your JavaScript code here
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Page loaded successfully');
+});
+EOF
+
+    # Create README file
+    cat > "$project_name/README.md" << EOF
+# $project_name
+
+A simple web project created with the project setup script.
+
+## Project Structure
+- \`index.html\` - Main HTML file
+- \`css/\` - Stylesheets
+- \`js/\` - JavaScript files
+- \`images/\` - Image assets
+- \`docs/\` - Documentation
+
+## Getting Started
+1. Open \`index.html\` in your web browser
+2. Edit the files to customize your project
+3. Add your own images to the \`images/\` folder
+
+## Development
+- HTML: Edit \`index.html\`
+- CSS: Edit \`css/style.css\`
+- JavaScript: Edit \`js/script.js\`
+EOF
+
+    print_message $GREEN "✅ Web project '$project_name' created successfully!"
+}
+
+# Create Python project structure
+create_python_project() {
+    local project_name=$1
+    
+    print_message $BLUE "Creating Python project: $project_name"
+    
+    # Create directories
+    mkdir -p "$project_name"/{src,tests,docs}
+    
+    # Create main Python file
+    cat > "$project_name/src/main.py" << EOF
+#!/usr/bin/env python3
+"""
+Main module for $project_name
+"""
+
+def main():
+    """Main function"""
+    print("Hello from $project_name!")
+    
+    # Add your code here
+    pass
+
+if __name__ == "__main__":
+    main()
+EOF
+
+    # Create a simple module
+    cat > "$project_name/src/utils.py" << EOF
+"""
+Utility functions for $project_name
+"""
+
+def greet(name):
+    """Greet a person by name"""
+    return f"Hello, {name}!"
+
+def calculate_sum(numbers):
+    """Calculate sum of a list of numbers"""
+    return sum(numbers)
+EOF
+
+    # Create test file
+    cat > "$project_name/tests/test_utils.py" << EOF
+"""
+Tests for utils module
+"""
+import sys
+import os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+
+from utils import greet, calculate_sum
+
+def test_greet():
+    """Test greet function"""
+    result = greet("World")
+    assert result == "Hello, World!"
+    print("✅ greet test passed")
+
+def test_calculate_sum():
+    """Test calculate_sum function"""
+    result = calculate_sum([1, 2, 3, 4, 5])
+    assert result == 15
+    print("✅ calculate_sum test passed")
+
+if __name__ == "__main__":
+    test_greet()
+    test_calculate_sum()
+    print("All tests passed!")
+EOF
+
+    # Create requirements file
+    cat > "$project_name/requirements.txt" << EOF
+# Add your Python dependencies here
+# Example:
+# requests>=2.25.0
+# numpy>=1.20.0
+EOF
+
+    # Create README
+    cat > "$project_name/README.md" << EOF
+# $project_name
+
+A Python project created with the project setup script.
+
+## Project Structure
+- \`src/\` - Source code
+- \`tests/\` - Test files
+- \`docs/\` - Documentation
+- \`requirements.txt\` - Python dependencies
+
+## Getting Started
+1. Navigate to the project directory: \`cd $project_name\`
+2. Install dependencies: \`pip install -r requirements.txt\`
+3. Run the main script: \`python src/main.py\`
+4. Run tests: \`python tests/test_utils.py\`
+
+## Development
+- Add new modules in the \`src/\` directory
+- Add tests in the \`tests/\` directory
+- Update \`requirements.txt\` when adding new dependencies
+EOF
+
+    print_message $GREEN "✅ Python project '$project_name' created successfully!"
+}
+
+# Main function
 main() {
-    local start_time=$(date)
-    log "INFO" "Starting build process at $start_time"
+    print_message $YELLOW "🚀 Project Setup Script"
+    echo
     
-    # Detect project type
-    PROJECT_TYPE=$(detect_project_type)
-    log "INFO" "Detected project type: $PROJECT_TYPE"
+    # Get project name
+    if [ -z "$1" ]; then
+        read -p "Enter project name: " project_name
+    else
+        project_name=$1
+    fi
     
-    if [ "$PROJECT_TYPE" = "unknown" ]; then
-        log "ERROR" "Unable to detect project type"
+    # Validate project name
+    if [ -z "$project_name" ]; then
+        print_message $YELLOW "❌ Project name cannot be empty"
         exit 1
     fi
     
-    # Execute build steps
-    if [ "$CLEAN" = true ]; then
-        clean_build
+    # Check if directory already exists
+    if [ -d "$project_name" ]; then
+        print_message $YELLOW "⚠️ Directory '$project_name' already exists"
+        read -p "Continue anyway? (y/N): " confirm
+        if [[ ! $confirm =~ ^[Yy]$ ]]; then
+            exit 0
+        fi
     fi
     
-    install_dependencies
-    run_tests
-    build_project
-    package_project
-    generate_report
+    # Get project type
+    echo "Select project type:"
+    echo "1) Web (HTML/CSS/JS)"
+    echo "2) Python"
+    read -p "Enter choice (1-2): " choice
     
-    log "INFO" "Build process completed successfully"
-}
-
-# Usage information
-usage() {
-    cat << EOF
-Universal Build Script
-
-Usage: $0 [OPTIONS]
-
-Options:
-    -h, --help          Show this help message
-    -v, --verbose       Enable verbose output
-    -c, --clean         Clean build artifacts before building
-    --no-test          Skip running tests
-    -p, --package      Create distribution packages
-    --type TYPE        Force project type detection (nodejs, python, maven, etc.)
-
-Examples:
-    $0                  # Basic build
-    $0 -c -p           # Clean build with packaging
-    $0 --no-test -v    # Build without tests, verbose output
-EOF
-}
-
-# Parse command line arguments
-while [[ $# -gt 0 ]]; do
-    case $1 in
-        -h|--help)
-            usage
-            exit 0
+    case $choice in
+        1)
+            create_web_project "$project_name"
             ;;
-        -v|--verbose)
-            VERBOSE=true
-            shift
-            ;;
-        -c|--clean)
-            CLEAN=true
-            shift
-            ;;
-        --no-test)
-            TEST=false
-            shift
-            ;;
-        -p|--package)
-            PACKAGE=true
-            shift
-            ;;
-        --type)
-            PROJECT_TYPE="$2"
-            shift 2
+        2)
+            create_python_project "$project_name"
             ;;
         *)
-            echo "Unknown option: $1"
-            usage
+            print_message $YELLOW "❌ Invalid choice"
             exit 1
             ;;
     esac
-done
+    
+    echo
+    print_message $GREEN "🎉 Project setup complete!"
+    print_message $BLUE "📁 Navigate to your project: cd $project_name"
+}
 
-# Error handling
-trap 'log "ERROR" "Build failed at line $LINENO"' ERR
+# Show usage if help requested
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    echo "Usage: $0 [project_name]"
+    echo "Creates a new project with basic structure and files"
+    echo
+    echo "Examples:"
+    echo "  $0                    # Interactive mode"
+    echo "  $0 my-website        # Create project with name"
+    exit 0
+fi
 
 # Run main function
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    main "$@"
-fi
+main "$@"
 ```
+
+**📝 Exercise 1: Customize the project generator**
+Modify the script to add more project types (e.g., basic Node.js project, simple documentation site).
 
 **🤖 Copilot Exercise 1:**
 ```
-Extend the build script to support additional project types (PHP, Ruby, .NET Core) and add performance monitoring to track build times for optimization.
+Add a "documentation" project type to the setup script that creates a basic documentation structure with multiple markdown files and an index page.
+```
+
+---
+
+## Part 2: File Organization and Cleanup Scripts
+
+### 2.1 File Organizer Script
+
+**💡 Copilot Prompt:**
+```
+Create a simple bash script that organizes files in a directory by their file extensions, moving them into appropriate subdirectories.
+```
+
+```bash
+#!/bin/bash
+# File Organizer Script
+# File: organize_files.sh
+
+# Colors for output
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+# Function to print colored messages
+print_msg() {
+    echo -e "${1}${2}${NC}"
+}
+
+# Function to organize files by extension
+organize_files() {
+    local target_dir=${1:-.}  # Default to current directory
+    local moved_count=0
+    
+    print_msg $BLUE "🗂️ Organizing files in: $target_dir"
+    
+    # Change to target directory
+    cd "$target_dir" || {
+        print_msg $RED "❌ Cannot access directory: $target_dir"
+        exit 1
+    }
+    
+    # Create organization directories
+    mkdir -p {documents,images,videos,audio,archives,scripts,data,misc}
+    
+    # Organize different file types
+    for file in *; do
+        # Skip if it's a directory or already organized
+        if [[ -d "$file" ]] || [[ "$file" == "organize_files.sh" ]]; then
+            continue
+        fi
+        
+        # Get file extension
+        extension="${file##*.}"
+        extension_lower=$(echo "$extension" | tr '[:upper:]' '[:lower:]')
+        
+        case $extension_lower in
+            # Documents
+            txt|doc|docx|pdf|rtf|odt)
+                mv "$file" documents/
+                print_msg $GREEN "📄 Moved $file to documents/"
+                ;;
+            # Images
+            jpg|jpeg|png|gif|bmp|svg|webp)
+                mv "$file" images/
+                print_msg $GREEN "🖼️ Moved $file to images/"
+                ;;
+            # Videos
+            mp4|avi|mkv|mov|wmv|flv|webm)
+                mv "$file" videos/
+                print_msg $GREEN "🎬 Moved $file to videos/"
+                ;;
+            # Audio
+            mp3|wav|flac|aac|ogg|wma)
+                mv "$file" audio/
+                print_msg $GREEN "🎵 Moved $file to audio/"
+                ;;
+            # Archives
+            zip|rar|7z|tar|gz|bz2)
+                mv "$file" archives/
+                print_msg $GREEN "📦 Moved $file to archives/"
+                ;;
+            # Scripts
+            sh|bash|py|js|php|pl|rb)
+                mv "$file" scripts/
+                print_msg $GREEN "📜 Moved $file to scripts/"
+                ;;
+            # Data files
+            csv|json|xml|yaml|yml|sql)
+                mv "$file" data/
+                print_msg $GREEN "📊 Moved $file to data/"
+                ;;
+            # Everything else
+            *)
+                mv "$file" misc/
+                print_msg $YELLOW "❓ Moved $file to misc/"
+                ;;
+        esac
+        
+        ((moved_count++))
+    done
+    
+    # Remove empty directories
+    for dir in documents images videos audio archives scripts data misc; do
+        if [[ -d "$dir" ]] && [[ -z "$(ls -A "$dir")" ]]; then
+            rmdir "$dir"
+            print_msg $YELLOW "🗑️ Removed empty directory: $dir"
+        fi
+    done
+    
+    print_msg $GREEN "✅ Organization complete! Moved $moved_count files."
+}
+
+# Function to show current organization
+show_organization() {
+    local target_dir=${1:-.}
+    
+    print_msg $BLUE "📋 Current organization in: $target_dir"
+    
+    for dir in documents images videos audio archives scripts data misc; do
+        if [[ -d "$target_dir/$dir" ]]; then
+            local count=$(find "$target_dir/$dir" -type f | wc -l)
+            if [[ $count -gt 0 ]]; then
+                print_msg $GREEN "  $dir: $count files"
+            fi
+        fi
+    done
+}
+
+# Main function
+main() {
+    case "${1:-organize}" in
+        organize)
+            organize_files "${2:-.}"
+            ;;
+        show|status)
+            show_organization "${2:-.}"
+            ;;
+        help|-h|--help)
+            echo "File Organizer Script"
+            echo
+            echo "Usage:"
+            echo "  $0 [organize] [directory]    # Organize files (default)"
+            echo "  $0 show [directory]          # Show current organization"
+            echo "  $0 help                      # Show this help"
+            echo
+            echo "Examples:"
+            echo "  $0                           # Organize current directory"
+            echo "  $0 organize ~/Downloads      # Organize Downloads folder"
+            echo "  $0 show ~/Downloads          # Show Downloads organization"
+            ;;
+        *)
+            print_msg $RED "❌ Unknown command: $1"
+            print_msg $YELLOW "Use '$0 help' for usage information"
+            exit 1
+            ;;
+    esac
+}
+
+# Run the script
+main "$@"
+```
+
+### 2.2 Project Backup Script
+
+**💡 Copilot Prompt:**
+```
+Create a simple backup script that creates compressed backups of project directories with timestamps, excluding common build artifacts and temporary files.
+```
+
+```bash
+#!/bin/bash
+# Project Backup Script
+# File: backup_project.sh
+
+# Configuration
+BACKUP_DIR="$HOME/project_backups"
+DATE_FORMAT=$(date '+%Y%m%d_%H%M%S')
+
+# Colors
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+print_msg() {
+    echo -e "${1}${2}${NC}"
+}
+
+# Function to create backup
+create_backup() {
+    local project_path=$1
+    local project_name=$(basename "$project_path")
+    local backup_name="${project_name}_${DATE_FORMAT}.tar.gz"
+    local backup_path="$BACKUP_DIR/$backup_name"
+    
+    # Validate project path
+    if [[ ! -d "$project_path" ]]; then
+        print_msg $RED "❌ Directory not found: $project_path"
+        exit 1
+    fi
+    
+    print_msg $BLUE "📦 Creating backup of: $project_name"
+    
+    # Create backup directory if it doesn't exist
+    mkdir -p "$BACKUP_DIR"
+    
+    # Files and directories to exclude from backup
+    local exclude_patterns=(
+        --exclude='node_modules'
+        --exclude='__pycache__'
+        --exclude='*.pyc'
+        --exclude='.git'
+        --exclude='build'
+        --exclude='dist'
+        --exclude='target'
+        --exclude='*.log'
+        --exclude='.DS_Store'
+        --exclude='Thumbs.db'
+        --exclude='*.tmp'
+        --exclude='*.temp'
+    )
+    
+    # Create compressed backup
+    if tar czf "$backup_path" "${exclude_patterns[@]}" -C "$(dirname "$project_path")" "$project_name"; then
+        local backup_size=$(du -h "$backup_path" | cut -f1)
+        print_msg $GREEN "✅ Backup created: $backup_name ($backup_size)"
+        print_msg $BLUE "📁 Location: $backup_path"
+    else
+        print_msg $RED "❌ Backup failed!"
+        exit 1
+    fi
+}
+
+# Function to list backups
+list_backups() {
+    print_msg $BLUE "📋 Available backups in: $BACKUP_DIR"
+    
+    if [[ ! -d "$BACKUP_DIR" ]]; then
+        print_msg $YELLOW "⚠️ No backup directory found"
+        return
+    fi
+    
+    local backup_count=0
+    for backup in "$BACKUP_DIR"/*.tar.gz; do
+        if [[ -f "$backup" ]]; then
+            local size=$(du -h "$backup" | cut -f1)
+            local date=$(stat -c %y "$backup" | cut -d' ' -f1)
+            print_msg $GREEN "  $(basename "$backup") - $size - $date"
+            ((backup_count++))
+        fi
+    done
+    
+    if [[ $backup_count -eq 0 ]]; then
+        print_msg $YELLOW "⚠️ No backups found"
+    else
+        print_msg $BLUE "Total backups: $backup_count"
+    fi
+}
+
+# Function to clean old backups
+clean_old_backups() {
+    local days=${1:-30}  # Default: keep backups for 30 days
+    
+    print_msg $BLUE "🧹 Cleaning backups older than $days days"
+    
+    if [[ ! -d "$BACKUP_DIR" ]]; then
+        print_msg $YELLOW "⚠️ No backup directory found"
+        return
+    fi
+    
+    local deleted_count=0
+    while read -r backup; do
+        if [[ -f "$backup" ]]; then
+            rm "$backup"
+            print_msg $YELLOW "🗑️ Deleted: $(basename "$backup")"
+            ((deleted_count++))
+        fi
+    done < <(find "$BACKUP_DIR" -name "*.tar.gz" -mtime +$days)
+    
+    if [[ $deleted_count -eq 0 ]]; then
+        print_msg $GREEN "✅ No old backups to clean"
+    else
+        print_msg $GREEN "✅ Cleaned $deleted_count old backups"
+    fi
+}
+
+# Main function
+main() {
+    case "${1:-backup}" in
+        backup)
+            if [[ -z "$2" ]]; then
+                create_backup "."
+            else
+                create_backup "$2"
+            fi
+            ;;
+        list)
+            list_backups
+            ;;
+        clean)
+            clean_old_backups "${2:-30}"
+            ;;
+        help|-h|--help)
+            echo "Project Backup Script"
+            echo
+            echo "Usage:"
+            echo "  $0 [backup] [project_path]   # Create backup (default: current dir)"
+            echo "  $0 list                      # List all backups"
+            echo "  $0 clean [days]              # Clean backups older than X days (default: 30)"
+            echo "  $0 help                      # Show this help"
+            echo
+            echo "Examples:"
+            echo "  $0                           # Backup current directory"
+            echo "  $0 backup ~/my-project       # Backup specific project"
+            echo "  $0 list                      # Show all backups"
+            echo "  $0 clean 7                   # Delete backups older than 7 days"
+            ;;
+        *)
+            print_msg $RED "❌ Unknown command: $1"
+            print_msg $YELLOW "Use '$0 help' for usage information"
+            exit 1
+            ;;
+    esac
+}
+
+main "$@"
+```
+
+**📝 Exercise 2: Enhanced file operations**
+Create a script that:
+1. Finds duplicate files in a directory
+2. Renames files in batch (e.g., adding prefixes/suffixes)
+3. Converts image files to different formats
+
+**🤖 Copilot Exercise 2:**
+```
+Create a script that finds and reports duplicate files in a directory using file checksums, with options to delete duplicates or move them to a separate folder.
 ```
 
 ---
@@ -1734,231 +1697,81 @@ resource "aws_security_group" "app" {
   }
 }
 
-# Application Load Balancer
-resource "aws_lb" "main" {
-  name               = "\${var.app_name}-alb-$environment"
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.app.id]
-  subnets            = aws_subnet.public[*].id
-  
-  enable_deletion_protection = false
-}
-
-# ECS Cluster
-resource "aws_ecs_cluster" "main" {
-  name = "\${var.app_name}-cluster-$environment"
-  
-  setting {
-    name  = "containerInsights"
-    value = "enabled"
-  }
-}
-EOF
-
-    # Variables
-    cat > "$IAC_DIR/aws/$environment/variables.tf" << EOF
-variable "aws_region" {
-  description = "AWS region"
-  type        = string
-  default     = "us-west-2"
-}
-
-variable "app_name" {
-  description = "Application name"
-  type        = string
-  default     = "$app_name"
-}
-
-variable "vpc_cidr" {
-  description = "VPC CIDR block"
-  type        = string
-  default     = "10.0.0.0/16"
-}
-
-variable "availability_zones" {
-  description = "Availability zones"
-  type        = list(string)
-  default     = ["us-west-2a", "us-west-2b"]
-}
-EOF
-
-    # Outputs
-    cat > "$IAC_DIR/aws/$environment/outputs.tf" << EOF
-output "vpc_id" {
-  value = aws_vpc.main.id
-}
-
-output "public_subnet_ids" {
-  value = aws_subnet.public[*].id
-}
-
-output "security_group_id" {
-  value = aws_security_group.app.id
-}
-
-output "load_balancer_dns" {
-  value = aws_lb.main.dns_name
-}
-
-output "ecs_cluster_name" {
-  value = aws_ecs_cluster.main.name
-}
-EOF
-
-    log "AWS Terraform configuration generated for $environment"
-}
-
-# Terraform operations
-terraform_init() {
-    local provider=$1
-    local environment=$2
-    
-    cd "$IAC_DIR/$provider/$environment"
-    
-    log "Initializing Terraform for $provider/$environment..."
-    terraform init
-}
-
-terraform_plan() {
-    local provider=$1
-    local environment=$2
-    
-    cd "$IAC_DIR/$provider/$environment"
-    
-    log "Creating Terraform plan for $provider/$environment..."
-    terraform plan -out="tfplan"
-}
-
-terraform_apply() {
-    local provider=$1
-    local environment=$2
-    
-    cd "$IAC_DIR/$provider/$environment"
-    
-    log "Applying Terraform plan for $provider/$environment..."
-    terraform apply "tfplan"
-}
-
-terraform_destroy() {
-    local provider=$1
-    local environment=$2
-    
-    cd "$IAC_DIR/$provider/$environment"
-    
-    log "Destroying infrastructure for $provider/$environment..."
-    terraform destroy -auto-approve
-}
-
-# Main function
-main() {
-    local action=$1
-    local provider=${2:-"aws"}
-    local environment=${3:-"dev"}
-    local app_name=${4:-"myapp"}
-    
-    case $action in
-        "init")
-            install_terraform
-            ;;
-        "generate")
-            case $provider in
-                "aws")
-                    generate_aws_config "$environment" "$app_name"
-                    ;;
-                *)
-                    log "Unsupported provider: $provider"
-                    exit 1
-                    ;;
-            esac
-            ;;
-        "plan")
-            terraform_init "$provider" "$environment"
-            terraform_plan "$provider" "$environment"
-            ;;
-        "apply")
-            terraform_apply "$provider" "$environment"
-            ;;
-        "destroy")
-            terraform_destroy "$provider" "$environment"
-            ;;
-        *)
-            echo "Usage: $0 {init|generate|plan|apply|destroy} [provider] [environment] [app_name]"
-            exit 1
-            ;;
-    esac
-}
-
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    main "$@"
-fi
-```
-
-**🤖 Copilot Exercise 3:**
-```
-Extend the IaC manager to support Azure Resource Manager templates and Google Cloud Deployment Manager, with cross-cloud resource mapping and cost estimation.
-```
-
----
-
-## Part 6: Lab Challenges
-
-### Challenge 1: Complete DevOps Pipeline
-Create a comprehensive automation suite that:
-- Sets up development environments automatically
-- Builds and tests applications across multiple platforms
-- Deploys to multiple environments with different strategies
-- Monitors deployments and handles rollbacks
-- Generates reports and notifications
-
-### Challenge 2: Multi-Cloud Deployment
-Build scripts that:
-- Deploy the same application to AWS, Azure, and GCP
-- Handle cloud-specific configurations
-- Manage secrets across different platforms
-- Implement disaster recovery procedures
-
-### Challenge 3: Microservices Automation
-Create automation for:
-- Setting up microservices architectures
-- Managing service dependencies
-- Orchestrating deployments across services
-- Monitoring service health and performance
-
-**💡 Copilot Prompt for All Challenges:**
-```
-For each challenge, create production-ready scripts with comprehensive error handling, logging, monitoring, and documentation. Include performance optimization and security best practices.
-```
-
 ---
 
 ## ✅ Validation Steps
 
-1. Scripts execute successfully across different environments
-2. Error handling prevents failures and provides useful feedback
-3. Logging and monitoring provide visibility into automation processes
-4. Rollback procedures work correctly
-5. Performance meets acceptable standards for production use
+1. **Script functionality**: All scripts run without errors and produce expected outputs
+2. **File organization**: Directory organization works correctly with different file types
+3. **Log analysis**: Log analyzer extracts meaningful information from sample log files
+4. **Batch processing**: File processing scripts handle multiple files efficiently
+5. **Project templates**: Generated projects have correct structure and work as expected
+6. **Development workflow**: Server launcher and git helper improve development efficiency
+
+---
+
+## 🎯 Final Exercises
+
+### Exercise 1: Custom Project Template
+Extend the project setup script to include:
+- React.js project template
+- Basic documentation template with multiple markdown files
+- Simple Express.js API template
+
+### Exercise 2: Enhanced File Processor
+Create additional batch operations:
+- Find and remove duplicate files (by content hash)
+- Batch rename files with sequence numbers
+- Extract metadata from images and create summary reports
+
+### Exercise 3: Development Workflow Enhancement
+Add features to the git helper script:
+- Automatic code formatting before commits
+- Integration with GitHub/GitLab for creating pull requests
+- Branch cleanup utilities (delete merged branches)
 
 ---
 
 ## 🔗 Additional Resources
 
-**Advanced Copilot Prompts:**
-```
-Create a script that automatically scales infrastructure based on application metrics
-Generate automation for compliance scanning and security hardening
-Build a script that manages feature flags across multiple environments
-Create disaster recovery automation with RTO/RPO targets
+**Useful Commands Reference:**
+```bash
+# File operations
+find . -name "*.txt" -exec cp {} backup/ \;
+grep -r "pattern" --include="*.log" .
+sed -i 's/old/new/g' *.txt
+
+# Development servers
+python3 -m http.server 8000
+npx live-server --port=3000
+php -S localhost:8080
+
+# Git workflow
+git checkout -b feature/new-feature
+git add . && git commit -m "feat: add new feature"
+git push -u origin feature/new-feature
 ```
 
-**Course Integration**: These automation skills prepare you for the upcoming Docker, CI/CD, and Azure modules where you'll apply these concepts at scale.
+**🤖 Advanced Copilot Prompts:**
+```
+Create a script that monitors a directory for new files and automatically processes them based on file type
+Generate a simple CI/CD script that runs tests and deploys to a staging server
+Build a log rotation script that compresses old logs and maintains disk space
+Create a backup script that syncs important files to cloud storage
+```
+
+**🔄 Next Steps:**
+- Practice creating your own automation scripts for daily tasks
+- Explore more advanced bash features like arrays and functions
+- Learn about cron jobs for scheduling automated tasks
+- Study CI/CD concepts for the next module
 
 ---
 
 **📚 Key Takeaways:**
-- Automate repetitive development and deployment tasks
-- Create reproducible and reliable infrastructure deployments
-- Implement comprehensive monitoring and rollback procedures
-- Use Infrastructure as Code for consistent environments
-- Leverage Copilot for complex automation script generation
+- Simple automation scripts can significantly improve development workflow
+- File organization and batch processing save time on repetitive tasks
+- Log analysis helps with debugging and monitoring
+- Project templates ensure consistent development environments
+- Git workflow helpers reduce common development friction
+- Start small and gradually build more complex automation solutions
