@@ -210,9 +210,9 @@
    
    ## 🌐 Live Demo
    
-   [![Visit Live Site](https://img.shields.io/badge/Visit-Live%20Site-blue?style=for-the-badge)](https://your-username.github.io/advanced-software-wil)
+   [![Visit Live Site](https://img.shields.io/badge/Visit-Live%20Site-blue?style=for-the-badge)](https://your-username.github.io/your-repo-name)
    
-   [🏠 **Visit Our Homepage**](https://your-username.github.io/advanced-software-wil)
+   [🏠 **Visit Our Homepage**](https://your-username.github.io/your-repo-name)
    
    ## 📄 License
    
@@ -284,9 +284,9 @@ This step covers creating index.html, deploying to GitHub Pages, adding homepage
    
    ## 🌐 Live Demo
    
-   [![Visit Live Site](https://via.placeholder.com/400x200/0366d6/ffffff?text=Click+to+Visit)](https://your-username.github.io/advanced-software-wil)
+   [![Visit Live Site](https://via.placeholder.com/400x200/0366d6/ffffff?text=Click+to+Visit)](https://your-username.github.io/your-repo-name)
    
-   **[🏠 Visit Our Homepage](https://your-username.github.io/advanced-software-wil)**
+   **[🏠 Visit Our Homepage](https://your-username.github.io/your-repo-name)**
    
    ## 📋 Project Overview
    <!-- Rest of your README content -->
@@ -297,13 +297,13 @@ This step covers creating index.html, deploying to GitHub Pages, adding homepage
    ## 🖼️ Project Gallery
    
    <!-- Main project dashboard - clickable -->
-   [![Project Dashboard](https://via.placeholder.com/600x300/667eea/ffffff?text=Click+to+Visit+Site)](https://your-username.github.io/advanced-software-wil)
+   [![Project Dashboard](https://via.placeholder.com/600x300/667eea/ffffff?text=Click+to+Visit+Site)](https://your-username.github.io/your-repo-name)
    
    <!-- Homepage preview - clickable -->
-   [![Homepage Preview](https://via.placeholder.com/600x300/764ba2/ffffff?text=Homepage+Preview)](https://your-username.github.io/advanced-software-wil)
+   [![Homepage Preview](https://via.placeholder.com/600x300/764ba2/ffffff?text=Homepage+Preview)](https://your-username.github.io/your-repo-name)
    
    <!-- Project board link - clickable -->
-   [![Project Board](https://via.placeholder.com/600x300/28a745/ffffff?text=View+Project+Board)](https://github.com/your-username/advanced-software-wil/projects)
+   [![Project Board](https://via.placeholder.com/600x300/28a745/ffffff?text=View+Project+Board)](https://github.com/your-username/your-repo-name/projects)
    ```
 
 3. **Add Interactive Elements Section:**
@@ -312,9 +312,9 @@ This step covers creating index.html, deploying to GitHub Pages, adding homepage
    
    | Resource | Link | Description |
    |----------|------|-------------|
-   | 🏠 Homepage | [Visit Site](https://your-username.github.io/advanced-software-wil) | Live project homepage |
-   | 📋 Project Board | [View Board](https://github.com/your-username/advanced-software-wil/projects) | Project management |
-   | 📁 Repository | [View Code](https://github.com/your-username/advanced-software-wil) | Source code |
+   | 🏠 Homepage | [Visit Site](https://your-username.github.io/your-repo-name) | Live project homepage |
+   | 📋 Project Board | [View Board](https://github.com/your-username/your-repo-name/projects) | Project management |
+   | 📁 Repository | [View Code](https://github.com/your-username/your-repo-name) | Source code |
    | 📄 Documentation | [Read Docs](README.md) | Project documentation |
    ```
 
@@ -326,9 +326,9 @@ This step covers creating index.html, deploying to GitHub Pages, adding homepage
    ```markdown
    ## 🌐 Live Site Preview
    
-   [![Live Site](https://img.shields.io/badge/🌐_Live_Site-Visit_Now-blue?style=for-the-badge)](https://your-username.github.io/advanced-software-wil)
+   [![Live Site](https://img.shields.io/badge/🌐_Live_Site-Visit_Now-blue?style=for-the-badge)](https://your-username.github.io/your-repo-name)
    
-   **Quick Access:** [https://your-username.github.io/advanced-software-wil](https://your-username.github.io/advanced-software-wil)
+   **Quick Access:** [https://your-username.github.io/your-repo-name](https://your-username.github.io/your-repo-name)
    
    ### Site Features:
    - Simple "Hello From GitHub Pages" message
@@ -342,18 +342,18 @@ This step covers creating index.html, deploying to GitHub Pages, adding homepage
    
    | Component | Status | Link |
    |-----------|--------|------|
-   | 🌐 Live Site | [![Deployed](https://img.shields.io/badge/Status-Live-green)](https://your-username.github.io/advanced-software-wil) | [Visit Site](https://your-username.github.io/advanced-software-wil) |
-   | 📋 Project Board | [![Active](https://img.shields.io/badge/Status-Active-blue)](https://github.com/your-username/advanced-software-wil/projects) | [View Board](https://github.com/your-username/advanced-software-wil/projects) |
-   | 📁 Repository | [![Public](https://img.shields.io/badge/Status-Public-brightgreen)](https://github.com/your-username/advanced-software-wil) | [View Code](https://github.com/your-username/advanced-software-wil) |
+   | 🌐 Live Site | [![Deployed](https://img.shields.io/badge/Status-Live-green)](https://your-username.github.io/your-repo-name) | [Visit Site](https://your-username.github.io/your-repo-name) |
+   | 📋 Project Board | [![Active](https://img.shields.io/badge/Status-Active-blue)](https://github.com/your-username/your-repo-name/projects) | [View Board](https://github.com/your-username/your-repo-name/projects) |
+   | 📁 Repository | [![Public](https://img.shields.io/badge/Status-Public-brightgreen)](https://github.com/your-username/your-repo-name) | [View Code](https://github.com/your-username/your-repo-name) |
    ```
 
    **Option 3: Create Quick Links Section:**
    ```markdown
    ## 🚀 Quick Links
    
-   - 🏠 **Homepage:** [your-username.github.io/advanced-software-wil](https://your-username.github.io/advanced-software-wil)
-   - 📋 **Project Board:** [GitHub Projects](https://github.com/your-username/advanced-software-wil/projects)
-   - 📁 **Source Code:** [Repository](https://github.com/your-username/advanced-software-wil)
+   - 🏠 **Homepage:** [your-username.github.io/your-repo-name](https://your-username.github.io/your-repo-name)
+   - 📋 **Project Board:** [GitHub Projects](https://github.com/your-username/your-repo-name/projects)
+   - 📁 **Source Code:** [Repository](https://github.com/your-username/your-repo-name)
    - 📄 **Documentation:** [README.md](README.md)
    ```
 
