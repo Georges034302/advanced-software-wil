@@ -1,1242 +1,529 @@
-# Lab 2D: Development Workflow Automation
+# Lab 2D: Simple Development Helpers
 
 ## 🎯 Learning Objectives
 By the end of this lab, you will be able to:
-- Create simple automation scripts for common development tasks
-- Build file processing and batch operation scripts
-- Automate project setup and organization
-- Use GitHub Copilot to generate helpful workflow scripts
-- Apply bash scripting to solve real development problems
+- Create basic automation scripts for daily development tasks
+- Build simple project setup helpers
+- Use bash scripting to solve common problems
+- Start development servers easily
+- Organize your files automatically
 
 ## 📋 Prerequisites
 - Completion of Labs 2A, 2B, and 2C
-- Understanding of bash scripting fundamentals
-- Basic file operations knowledge
-- GitHub Copilot enabled
+- Basic understanding of bash commands (`ls`, `cp`, `mv`, `mkdir`)
+- Knowledge of simple bash loops and conditionals
 
 ---
 
-## Part 1: Project Setup Automation
+## Part 1: Simple Project Starters
 
-### 1.1 Simple Project Template Generator
+### 1.1 Simple HTML Project Creator
 
 **💡 Copilot Prompt:**
 ```
-Create a simple bash script that generates basic project structures for web development projects (HTML/CSS/JS) with common files and folders.
+Create a very simple bash script that makes a basic HTML project with an index.html file, style.css, and script.js file.
 ```
 
 ```bash
 #!/bin/bash
-# Project Setup Script
-# File: setup_project.sh
+# Simple HTML Project Creator
+# File: new_html.sh
 
-# Colors for output
-GREEN='\033[0;32m'
-BLUE='\033[0;34m'
-YELLOW='\033[1;33m'
-NC='\033[0m' # No Color
+echo "Creating a new HTML project..."
 
-# Function to print colored output
-print_message() {
-    local color=$1
-    local message=$2
-    echo -e "${color}${message}${NC}"
-}
+# Get project name
+read -p "What's your project name? " project_name
 
-# Create basic web project structure
-create_web_project() {
-    local project_name=$1
-    
-    print_message $BLUE "Creating web project: $project_name"
-    
-    # Create main directories
-    mkdir -p "$project_name"/{css,js,images,docs}
-    
-    # Create basic HTML file
-    cat > "$project_name/index.html" << EOF
+# Check if name is empty
+if [ -z "$project_name" ]; then
+    echo "Please enter a project name!"
+    exit 1
+fi
+
+# Create project folder
+mkdir "$project_name"
+cd "$project_name"
+
+# Create basic HTML file
+cat > index.html << 'EOF'
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>$project_name</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>My Website</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Welcome to $project_name</h1>
-    </header>
+    <h1>Welcome to My Website!</h1>
+    <p>This is my awesome website.</p>
+    <button onclick="sayHello()">Click Me!</button>
     
-    <main>
-        <p>This is your new project!</p>
-    </main>
-    
-    <footer>
-        <p>&copy; 2025 $project_name</p>
-    </footer>
-    
-    <script src="js/script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
 EOF
 
-    # Create basic CSS file
-    cat > "$project_name/css/style.css" << EOF
-/* Basic styles for $project_name */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+# Create basic CSS file
+cat > style.css << 'EOF'
 body {
     font-family: Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
+    margin: 40px;
+    background-color: #f0f0f0;
 }
 
-header {
-    background-color: #007bff;
+h1 {
+    color: blue;
+}
+
+button {
+    background-color: green;
     color: white;
-    text-align: center;
-    padding: 1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-main {
-    padding: 2rem;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-footer {
-    background-color: #f8f9fa;
-    text-align: center;
-    padding: 1rem;
-    margin-top: 2rem;
+button:hover {
+    background-color: darkgreen;
 }
 EOF
 
-    # Create basic JavaScript file
-    cat > "$project_name/js/script.js" << EOF
-// JavaScript for $project_name
-console.log('Welcome to $project_name!');
-
-// Add your JavaScript code here
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Page loaded successfully');
-});
-EOF
-
-    # Create README file
-    cat > "$project_name/README.md" << EOF
-# $project_name
-
-A simple web project created with the project setup script.
-
-## Project Structure
-- \`index.html\` - Main HTML file
-- \`css/\` - Stylesheets
-- \`js/\` - JavaScript files
-- \`images/\` - Image assets
-- \`docs/\` - Documentation
-
-## Getting Started
-1. Open \`index.html\` in your web browser
-2. Edit the files to customize your project
-3. Add your own images to the \`images/\` folder
-
-## Development
-- HTML: Edit \`index.html\`
-- CSS: Edit \`css/style.css\`
-- JavaScript: Edit \`js/script.js\`
-EOF
-
-    print_message $GREEN "✅ Web project '$project_name' created successfully!"
+# Create basic JavaScript file
+cat > script.js << 'EOF'
+function sayHello() {
+    alert("Hello! Welcome to my website!");
 }
 
-# Create Python project structure
-create_python_project() {
-    local project_name=$1
-    
-    print_message $BLUE "Creating Python project: $project_name"
-    
-    # Create directories
-    mkdir -p "$project_name"/{src,tests,docs}
-    
-    # Create main Python file
-    cat > "$project_name/src/main.py" << EOF
+console.log("Website loaded successfully!");
+EOF
+
+echo "✅ HTML project '$project_name' created!"
+echo "📁 Open index.html in your browser to see it"
+```
+
+### 1.2 Simple Python Project Creator
+
+**💡 Copilot Prompt:**
+```
+Create a very simple bash script that makes a basic Python project with a main.py file and a simple function.
+```
+
+```bash
+#!/bin/bash
+# Simple Python Project Creator
+# File: new_python.sh
+
+echo "Creating a new Python project..."
+
+# Get project name
+read -p "What's your project name? " project_name
+
+# Check if name is empty
+if [ -z "$project_name" ]; then
+    echo "Please enter a project name!"
+    exit 1
+fi
+
+# Create project folder
+mkdir "$project_name"
+cd "$project_name"
+
+# Create main Python file
+cat > main.py << 'EOF'
 #!/usr/bin/env python3
 """
-Main module for $project_name
+My Python Project
 """
+
+def greet(name):
+    """Say hello to someone"""
+    return f"Hello, {name}!"
+
+def add_numbers(a, b):
+    """Add two numbers together"""
+    return a + b
 
 def main():
     """Main function"""
-    print("Hello from $project_name!")
+    print("Welcome to my Python project!")
     
-    # Add your code here
-    pass
+    # Try the functions
+    message = greet("World")
+    print(message)
+    
+    result = add_numbers(5, 3)
+    print(f"5 + 3 = {result}")
+    
+    # Get user input
+    name = input("What's your name? ")
+    personal_greeting = greet(name)
+    print(personal_greeting)
 
 if __name__ == "__main__":
     main()
 EOF
 
-    # Create a simple module
-    cat > "$project_name/src/utils.py" << EOF
+# Create a simple test file
+cat > test.py << 'EOF'
 """
-Utility functions for $project_name
+Simple tests for our functions
 """
-
-def greet(name):
-    """Greet a person by name"""
-    return f"Hello, {name}!"
-
-def calculate_sum(numbers):
-    """Calculate sum of a list of numbers"""
-    return sum(numbers)
-EOF
-
-    # Create test file
-    cat > "$project_name/tests/test_utils.py" << EOF
-"""
-Tests for utils module
-"""
-import sys
-import os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
-
-from utils import greet, calculate_sum
+from main import greet, add_numbers
 
 def test_greet():
-    """Test greet function"""
-    result = greet("World")
-    assert result == "Hello, World!"
-    print("✅ greet test passed")
+    """Test the greet function"""
+    result = greet("Alice")
+    expected = "Hello, Alice!"
+    if result == expected:
+        print("✅ greet test passed")
+    else:
+        print("❌ greet test failed")
 
-def test_calculate_sum():
-    """Test calculate_sum function"""
-    result = calculate_sum([1, 2, 3, 4, 5])
-    assert result == 15
-    print("✅ calculate_sum test passed")
+def test_add_numbers():
+    """Test the add_numbers function"""
+    result = add_numbers(2, 3)
+    expected = 5
+    if result == expected:
+        print("✅ add_numbers test passed")
+    else:
+        print("❌ add_numbers test failed")
 
 if __name__ == "__main__":
+    print("Running tests...")
     test_greet()
-    test_calculate_sum()
-    print("All tests passed!")
+    test_add_numbers()
+    print("Tests complete!")
 EOF
 
-    # Create requirements file
-    cat > "$project_name/requirements.txt" << EOF
-# Add your Python dependencies here
-# Example:
-# requests>=2.25.0
-# numpy>=1.20.0
-EOF
-
-    # Create README
-    cat > "$project_name/README.md" << EOF
+# Create README file
+cat > README.md << EOF
 # $project_name
 
-A Python project created with the project setup script.
+A simple Python project.
 
-## Project Structure
-- \`src/\` - Source code
-- \`tests/\` - Test files
-- \`docs/\` - Documentation
-- \`requirements.txt\` - Python dependencies
+## How to run:
+\`\`\`
+python3 main.py
+\`\`\`
 
-## Getting Started
-1. Navigate to the project directory: \`cd $project_name\`
-2. Install dependencies: \`pip install -r requirements.txt\`
-3. Run the main script: \`python src/main.py\`
-4. Run tests: \`python tests/test_utils.py\`
-
-## Development
-- Add new modules in the \`src/\` directory
-- Add tests in the \`tests/\` directory
-- Update \`requirements.txt\` when adding new dependencies
+## How to test:
+\`\`\`
+python3 test.py
+\`\`\`
 EOF
 
-    print_message $GREEN "✅ Python project '$project_name' created successfully!"
-}
+echo "✅ Python project '$project_name' created!"
+echo "📁 Run with: cd $project_name && python3 main.py"
+```
 
-# Main function
-main() {
-    print_message $YELLOW "🚀 Project Setup Script"
-    echo
-    
-    # Get project name
-    if [ -z "$1" ]; then
-        read -p "Enter project name: " project_name
-    else
-        project_name=$1
-    fi
-    
-    # Validate project name
-    if [ -z "$project_name" ]; then
-        print_message $YELLOW "❌ Project name cannot be empty"
-        exit 1
-    fi
-    
-    # Check if directory already exists
-    if [ -d "$project_name" ]; then
-        print_message $YELLOW "⚠️ Directory '$project_name' already exists"
-        read -p "Continue anyway? (y/N): " confirm
-        if [[ ! $confirm =~ ^[Yy]$ ]]; then
-            exit 0
-        fi
-    fi
-    
-    # Get project type
-    echo "Select project type:"
-    echo "1) Web (HTML/CSS/JS)"
-    echo "2) Python"
-    read -p "Enter choice (1-2): " choice
-    
-    case $choice in
-        1)
-            create_web_project "$project_name"
-            ;;
-        2)
-            create_python_project "$project_name"
-            ;;
-        *)
-            print_message $YELLOW "❌ Invalid choice"
-            exit 1
-            ;;
-    esac
-    
-    echo
-    print_message $GREEN "🎉 Project setup complete!"
-    print_message $BLUE "📁 Navigate to your project: cd $project_name"
-}
+**📝 Exercise 1: Try it out**
+1. Create these two scripts
+2. Run `./new_html.sh` and make an HTML project
+3. Run `./new_python.sh` and make a Python project
+4. Test both projects work correctly
 
-# Show usage if help requested
-if [[ "$1" == "-h" || "$1" == "--help" ]]; then
-    echo "Usage: $0 [project_name]"
-    echo "Creates a new project with basic structure and files"
-    echo
-    echo "Examples:"
-    echo "  $0                    # Interactive mode"
-    echo "  $0 my-website        # Create project with name"
-    exit 0
+---
+
+## Part 2: Simple Development Servers
+
+### 2.1 Quick HTML Server
+
+**💡 Copilot Prompt:**
+```
+Create a simple bash script that starts a local web server to view HTML files in the browser.
+```
+
+```bash
+#!/bin/bash
+# Quick HTML Server
+# File: serve_html.sh
+
+echo "🌐 Starting local web server..."
+
+# Check if we're in a directory with HTML files
+if ls *.html &>/dev/null; then
+    echo "📁 Found HTML files in current directory"
+else
+    echo "⚠️ No HTML files found in current directory"
+    echo "Make sure you're in a folder with HTML files"
 fi
 
-# Run main function
-main "$@"
+# Use Python's built-in server
+PORT=8000
+
+echo "🚀 Starting server on port $PORT"
+echo "📱 Open your browser and go to: http://localhost:$PORT"
+echo "🛑 Press Ctrl+C to stop the server"
+echo
+
+# Start the server
+if command -v python3 &>/dev/null; then
+    python3 -m http.server $PORT
+else
+    echo "❌ Python 3 not found. Please install Python 3."
+    exit 1
+fi
 ```
 
-**📝 Exercise 1: Customize the project generator**
-Modify the script to add more project types (e.g., basic Node.js project, simple documentation site).
-
-**🤖 Copilot Exercise 1:**
-```
-Add a "documentation" project type to the setup script that creates a basic documentation structure with multiple markdown files and an index page.
-```
-
----
-
-## Part 2: File Organization and Cleanup Scripts
-
-### 2.1 File Organizer Script
+### 2.2 Quick Python Runner
 
 **💡 Copilot Prompt:**
 ```
-Create a simple bash script that organizes files in a directory by their file extensions, moving them into appropriate subdirectories.
+Create a simple bash script that finds and runs Python files easily.
 ```
 
 ```bash
 #!/bin/bash
-# File Organizer Script
-# File: organize_files.sh
+# Quick Python Runner
+# File: run_python.sh
 
-# Colors for output
-GREEN='\033[0;32m'
-BLUE='\033[0;34m'
-YELLOW='\033[1;33m'
-RED='\033[0;31m'
-NC='\033[0m'
+echo "🐍 Python Script Runner"
 
-# Function to print colored messages
-print_msg() {
-    echo -e "${1}${2}${NC}"
-}
-
-# Function to organize files by extension
-organize_files() {
-    local target_dir=${1:-.}  # Default to current directory
-    local moved_count=0
-    
-    print_msg $BLUE "🗂️ Organizing files in: $target_dir"
-    
-    # Change to target directory
-    cd "$target_dir" || {
-        print_msg $RED "❌ Cannot access directory: $target_dir"
-        exit 1
-    }
-    
-    # Create organization directories
-    mkdir -p {documents,images,videos,audio,archives,scripts,data,misc}
-    
-    # Organize different file types
-    for file in *; do
-        # Skip if it's a directory or already organized
-        if [[ -d "$file" ]] || [[ "$file" == "organize_files.sh" ]]; then
-            continue
-        fi
-        
-        # Get file extension
-        extension="${file##*.}"
-        extension_lower=$(echo "$extension" | tr '[:upper:]' '[:lower:]')
-        
-        case $extension_lower in
-            # Documents
-            txt|doc|docx|pdf|rtf|odt)
-                mv "$file" documents/
-                print_msg $GREEN "📄 Moved $file to documents/"
-                ;;
-            # Images
-            jpg|jpeg|png|gif|bmp|svg|webp)
-                mv "$file" images/
-                print_msg $GREEN "🖼️ Moved $file to images/"
-                ;;
-            # Videos
-            mp4|avi|mkv|mov|wmv|flv|webm)
-                mv "$file" videos/
-                print_msg $GREEN "🎬 Moved $file to videos/"
-                ;;
-            # Audio
-            mp3|wav|flac|aac|ogg|wma)
-                mv "$file" audio/
-                print_msg $GREEN "🎵 Moved $file to audio/"
-                ;;
-            # Archives
-            zip|rar|7z|tar|gz|bz2)
-                mv "$file" archives/
-                print_msg $GREEN "📦 Moved $file to archives/"
-                ;;
-            # Scripts
-            sh|bash|py|js|php|pl|rb)
-                mv "$file" scripts/
-                print_msg $GREEN "📜 Moved $file to scripts/"
-                ;;
-            # Data files
-            csv|json|xml|yaml|yml|sql)
-                mv "$file" data/
-                print_msg $GREEN "📊 Moved $file to data/"
-                ;;
-            # Everything else
-            *)
-                mv "$file" misc/
-                print_msg $YELLOW "❓ Moved $file to misc/"
-                ;;
-        esac
-        
-        ((moved_count++))
-    done
-    
-    # Remove empty directories
-    for dir in documents images videos audio archives scripts data misc; do
-        if [[ -d "$dir" ]] && [[ -z "$(ls -A "$dir")" ]]; then
-            rmdir "$dir"
-            print_msg $YELLOW "🗑️ Removed empty directory: $dir"
-        fi
-    done
-    
-    print_msg $GREEN "✅ Organization complete! Moved $moved_count files."
-}
-
-# Function to show current organization
-show_organization() {
-    local target_dir=${1:-.}
-    
-    print_msg $BLUE "📋 Current organization in: $target_dir"
-    
-    for dir in documents images videos audio archives scripts data misc; do
-        if [[ -d "$target_dir/$dir" ]]; then
-            local count=$(find "$target_dir/$dir" -type f | wc -l)
-            if [[ $count -gt 0 ]]; then
-                print_msg $GREEN "  $dir: $count files"
-            fi
-        fi
-    done
-}
-
-# Main function
-main() {
-    case "${1:-organize}" in
-        organize)
-            organize_files "${2:-.}"
-            ;;
-        show|status)
-            show_organization "${2:-.}"
-            ;;
-        help|-h|--help)
-            echo "File Organizer Script"
-            echo
-            echo "Usage:"
-            echo "  $0 [organize] [directory]    # Organize files (default)"
-            echo "  $0 show [directory]          # Show current organization"
-            echo "  $0 help                      # Show this help"
-            echo
-            echo "Examples:"
-            echo "  $0                           # Organize current directory"
-            echo "  $0 organize ~/Downloads      # Organize Downloads folder"
-            echo "  $0 show ~/Downloads          # Show Downloads organization"
-            ;;
-        *)
-            print_msg $RED "❌ Unknown command: $1"
-            print_msg $YELLOW "Use '$0 help' for usage information"
-            exit 1
-            ;;
-    esac
-}
-
-# Run the script
-main "$@"
-```
-
-### 2.2 Project Backup Script
-
-**💡 Copilot Prompt:**
-```
-Create a simple backup script that creates compressed backups of project directories with timestamps, excluding common build artifacts and temporary files.
-```
-
-```bash
-#!/bin/bash
-# Project Backup Script
-# File: backup_project.sh
-
-# Configuration
-BACKUP_DIR="$HOME/project_backups"
-DATE_FORMAT=$(date '+%Y%m%d_%H%M%S')
-
-# Colors
-GREEN='\033[0;32m'
-BLUE='\033[0;34m'
-YELLOW='\033[1;33m'
-RED='\033[0;31m'
-NC='\033[0m'
-
-print_msg() {
-    echo -e "${1}${2}${NC}"
-}
-
-# Function to create backup
-create_backup() {
-    local project_path=$1
-    local project_name=$(basename "$project_path")
-    local backup_name="${project_name}_${DATE_FORMAT}.tar.gz"
-    local backup_path="$BACKUP_DIR/$backup_name"
-    
-    # Validate project path
-    if [[ ! -d "$project_path" ]]; then
-        print_msg $RED "❌ Directory not found: $project_path"
+# Check if a specific file was provided
+if [ -n "$1" ]; then
+    # Run the specified file
+    if [ -f "$1" ]; then
+        echo "▶️ Running $1..."
+        python3 "$1"
+    else
+        echo "❌ File '$1' not found"
         exit 1
     fi
+else
+    # Look for Python files in current directory
+    echo "Looking for Python files..."
     
-    print_msg $BLUE "📦 Creating backup of: $project_name"
+    # Find all .py files
+    python_files=($(ls *.py 2>/dev/null))
     
-    # Create backup directory if it doesn't exist
-    mkdir -p "$BACKUP_DIR"
-    
-    # Files and directories to exclude from backup
-    local exclude_patterns=(
-        --exclude='node_modules'
-        --exclude='__pycache__'
-        --exclude='*.pyc'
-        --exclude='.git'
-        --exclude='build'
-        --exclude='dist'
-        --exclude='target'
-        --exclude='*.log'
-        --exclude='.DS_Store'
-        --exclude='Thumbs.db'
-        --exclude='*.tmp'
-        --exclude='*.temp'
-    )
-    
-    # Create compressed backup
-    if tar czf "$backup_path" "${exclude_patterns[@]}" -C "$(dirname "$project_path")" "$project_name"; then
-        local backup_size=$(du -h "$backup_path" | cut -f1)
-        print_msg $GREEN "✅ Backup created: $backup_name ($backup_size)"
-        print_msg $BLUE "📁 Location: $backup_path"
-    else
-        print_msg $RED "❌ Backup failed!"
+    if [ ${#python_files[@]} -eq 0 ]; then
+        echo "❌ No Python files found in current directory"
         exit 1
-    fi
-}
-
-# Function to list backups
-list_backups() {
-    print_msg $BLUE "📋 Available backups in: $BACKUP_DIR"
-    
-    if [[ ! -d "$BACKUP_DIR" ]]; then
-        print_msg $YELLOW "⚠️ No backup directory found"
-        return
-    fi
-    
-    local backup_count=0
-    for backup in "$BACKUP_DIR"/*.tar.gz; do
-        if [[ -f "$backup" ]]; then
-            local size=$(du -h "$backup" | cut -f1)
-            local date=$(stat -c %y "$backup" | cut -d' ' -f1)
-            print_msg $GREEN "  $(basename "$backup") - $size - $date"
-            ((backup_count++))
-        fi
-    done
-    
-    if [[ $backup_count -eq 0 ]]; then
-        print_msg $YELLOW "⚠️ No backups found"
+    elif [ ${#python_files[@]} -eq 1 ]; then
+        # Only one file, run it
+        echo "▶️ Running ${python_files[0]}..."
+        python3 "${python_files[0]}"
     else
-        print_msg $BLUE "Total backups: $backup_count"
-    fi
-}
-
-# Function to clean old backups
-clean_old_backups() {
-    local days=${1:-30}  # Default: keep backups for 30 days
-    
-    print_msg $BLUE "🧹 Cleaning backups older than $days days"
-    
-    if [[ ! -d "$BACKUP_DIR" ]]; then
-        print_msg $YELLOW "⚠️ No backup directory found"
-        return
-    fi
-    
-    local deleted_count=0
-    while read -r backup; do
-        if [[ -f "$backup" ]]; then
-            rm "$backup"
-            print_msg $YELLOW "🗑️ Deleted: $(basename "$backup")"
-            ((deleted_count++))
-        fi
-    done < <(find "$BACKUP_DIR" -name "*.tar.gz" -mtime +$days)
-    
-    if [[ $deleted_count -eq 0 ]]; then
-        print_msg $GREEN "✅ No old backups to clean"
-    else
-        print_msg $GREEN "✅ Cleaned $deleted_count old backups"
-    fi
-}
-
-# Main function
-main() {
-    case "${1:-backup}" in
-        backup)
-            if [[ -z "$2" ]]; then
-                create_backup "."
-            else
-                create_backup "$2"
-            fi
-            ;;
-        list)
-            list_backups
-            ;;
-        clean)
-            clean_old_backups "${2:-30}"
-            ;;
-        help|-h|--help)
-            echo "Project Backup Script"
-            echo
-            echo "Usage:"
-            echo "  $0 [backup] [project_path]   # Create backup (default: current dir)"
-            echo "  $0 list                      # List all backups"
-            echo "  $0 clean [days]              # Clean backups older than X days (default: 30)"
-            echo "  $0 help                      # Show this help"
-            echo
-            echo "Examples:"
-            echo "  $0                           # Backup current directory"
-            echo "  $0 backup ~/my-project       # Backup specific project"
-            echo "  $0 list                      # Show all backups"
-            echo "  $0 clean 7                   # Delete backups older than 7 days"
-            ;;
-        *)
-            print_msg $RED "❌ Unknown command: $1"
-            print_msg $YELLOW "Use '$0 help' for usage information"
-            exit 1
-            ;;
-    esac
-}
-
-main "$@"
-```
-
-**📝 Exercise 2: Enhanced file operations**
-Create a script that:
-1. Finds duplicate files in a directory
-2. Renames files in batch (e.g., adding prefixes/suffixes)
-3. Converts image files to different formats
-
-**🤖 Copilot Exercise 2:**
-```
-Create a script that finds and reports duplicate files in a directory using file checksums, with options to delete duplicates or move them to a separate folder.
-```
-
----
-
-## Part 3: Deployment Automation
-
-### 3.1 Multi-Environment Deployment Script
-
-```bash
-#!/bin/bash
-# Multi-Environment Deployment Script
-# File: deploy.sh
-
-set -euo pipefail
-
-# Configuration
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CONFIG_DIR="$SCRIPT_DIR/config"
-BACKUP_DIR="$SCRIPT_DIR/backups"
-LOG_FILE="$SCRIPT_DIR/deploy.log"
-
-# Default values
-ENVIRONMENT=""
-SERVICE_NAME=""
-VERSION=""
-DRY_RUN=false
-ROLLBACK=false
-FORCE=false
-
-# Environment configurations
-declare -A ENV_CONFIGS
-ENV_CONFIGS[dev]="dev.env"
-ENV_CONFIGS[staging]="staging.env"
-ENV_CONFIGS[prod]="prod.env"
-
-# Deployment strategies
-declare -A DEPLOY_STRATEGIES
-DEPLOY_STRATEGIES[blue-green]="blue_green_deploy"
-DEPLOY_STRATEGIES[rolling]="rolling_deploy"
-DEPLOY_STRATEGIES[recreate]="recreate_deploy"
-
-# Logging with levels
-log() {
-    local level=$1
-    shift
-    local message="$@"
-    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
-    echo "[$timestamp] [$level] $message" | tee -a "$LOG_FILE"
-}
-
-# Load environment configuration
-load_env_config() {
-    local env=$1
-    local config_file="$CONFIG_DIR/${ENV_CONFIGS[$env]}"
-    
-    if [ ! -f "$config_file" ]; then
-        log "ERROR" "Configuration file not found: $config_file"
-        return 1
-    fi
-    
-    log "INFO" "Loading configuration for environment: $env"
-    source "$config_file"
-    
-    # Validate required variables
-    local required_vars=("DEPLOY_TARGET" "DEPLOY_USER" "SERVICE_PORT")
-    for var in "${required_vars[@]}"; do
-        if [ -z "${!var:-}" ]; then
-            log "ERROR" "Required variable $var not set in $config_file"
-            return 1
-        fi
-    done
-}
-
-# Pre-deployment checks
-pre_deploy_checks() {
-    log "INFO" "Running pre-deployment checks..."
-    
-    # Check if service is running
-    if [ "$ROLLBACK" = false ]; then
-        check_service_health
-    fi
-    
-    # Check deployment target accessibility
-    if ! ping -c 1 "$DEPLOY_TARGET" &>/dev/null; then
-        log "ERROR" "Cannot reach deployment target: $DEPLOY_TARGET"
-        return 1
-    fi
-    
-    # Check SSH connectivity
-    if ! ssh -o ConnectTimeout=10 "$DEPLOY_USER@$DEPLOY_TARGET" "echo 'SSH OK'" &>/dev/null; then
-        log "ERROR" "SSH connection failed to $DEPLOY_USER@$DEPLOY_TARGET"
-        return 1
-    fi
-    
-    # Check disk space on target
-    local available_space=$(ssh "$DEPLOY_USER@$DEPLOY_TARGET" "df / | awk 'NR==2 {print \$4}'")
-    if [ "$available_space" -lt 1000000 ]; then  # Less than 1GB
-        log "WARN" "Low disk space on target: ${available_space}KB available"
-        if [ "$FORCE" = false ]; then
-            log "ERROR" "Insufficient disk space. Use --force to override."
-            return 1
-        fi
-    fi
-    
-    log "INFO" "Pre-deployment checks passed"
-}
-
-# Check service health
-check_service_health() {
-    log "INFO" "Checking service health..."
-    
-    local health_url="http://$DEPLOY_TARGET:$SERVICE_PORT/health"
-    local max_attempts=3
-    local attempt=1
-    
-    while [ $attempt -le $max_attempts ]; do
-        if curl -f -s "$health_url" &>/dev/null; then
-            log "INFO" "Service health check passed"
-            return 0
-        fi
+        # Multiple files, let user choose
+        echo "Found multiple Python files:"
+        for i in "${!python_files[@]}"; do
+            echo "$((i+1))) ${python_files[$i]}"
+        done
         
-        log "WARN" "Health check attempt $attempt failed"
-        ((attempt++))
-        sleep 5
-    done
-    
-    log "ERROR" "Service health check failed after $max_attempts attempts"
-    return 1
-}
-
-# Create backup
-create_backup() {
-    if [ "$DRY_RUN" = true ]; then
-        log "INFO" "[DRY RUN] Would create backup"
-        return 0
-    fi
-    
-    log "INFO" "Creating backup..."
-    
-    local backup_name="${SERVICE_NAME}_${ENVIRONMENT}_$(date +%Y%m%d_%H%M%S)"
-    local backup_path="$BACKUP_DIR/$backup_name"
-    
-    mkdir -p "$backup_path"
-    
-    # Backup application files
-    ssh "$DEPLOY_USER@$DEPLOY_TARGET" "tar -czf /tmp/$backup_name.tar.gz -C /opt/$SERVICE_NAME ."
-    scp "$DEPLOY_USER@$DEPLOY_TARGET:/tmp/$backup_name.tar.gz" "$backup_path/"
-    ssh "$DEPLOY_USER@$DEPLOY_TARGET" "rm /tmp/$backup_name.tar.gz"
-    
-    # Backup database (if applicable)
-    if [ -n "${DB_NAME:-}" ]; then
-        ssh "$DEPLOY_USER@$DEPLOY_TARGET" "pg_dump $DB_NAME | gzip > /tmp/${backup_name}_db.sql.gz"
-        scp "$DEPLOY_USER@$DEPLOY_TARGET:/tmp/${backup_name}_db.sql.gz" "$backup_path/"
-        ssh "$DEPLOY_USER@$DEPLOY_TARGET" "rm /tmp/${backup_name}_db.sql.gz"
-    fi
-    
-    echo "$backup_name" > "$BACKUP_DIR/latest_backup"
-    log "INFO" "Backup created: $backup_name"
-}
-
-# Blue-Green deployment
-blue_green_deploy() {
-    log "INFO" "Starting blue-green deployment..."
-    
-    local current_slot=$(ssh "$DEPLOY_USER@$DEPLOY_TARGET" "readlink /opt/$SERVICE_NAME/current" | grep -o '[bg]$')
-    local new_slot="g"
-    if [ "$current_slot" = "g" ]; then
-        new_slot="b"
-    fi
-    
-    log "INFO" "Deploying to slot: $new_slot"
-    
-    # Deploy to inactive slot
-    deploy_to_slot "$new_slot"
-    
-    # Health check new deployment
-    if check_service_health_slot "$new_slot"; then
-        # Switch traffic
-        ssh "$DEPLOY_USER@$DEPLOY_TARGET" "ln -sfn /opt/$SERVICE_NAME/$new_slot /opt/$SERVICE_NAME/current"
-        log "INFO" "Traffic switched to new deployment"
-    else
-        log "ERROR" "Health check failed for new deployment"
-        return 1
-    fi
-}
-
-# Rolling deployment
-rolling_deploy() {
-    log "INFO" "Starting rolling deployment..."
-    
-    local instances=($(ssh "$DEPLOY_USER@$DEPLOY_TARGET" "docker ps --format '{{.Names}}' | grep $SERVICE_NAME"))
-    
-    for instance in "${instances[@]}"; do
-        log "INFO" "Updating instance: $instance"
+        read -p "Which file do you want to run? (1-${#python_files[@]}): " choice
         
-        # Update one instance
-        ssh "$DEPLOY_USER@$DEPLOY_TARGET" "docker stop $instance"
-        ssh "$DEPLOY_USER@$DEPLOY_TARGET" "docker rm $instance"
-        ssh "$DEPLOY_USER@$DEPLOY_TARGET" "docker run -d --name $instance $SERVICE_NAME:$VERSION"
-        
-        # Wait for health check
-        sleep 30
-        if ! check_service_health; then
-            log "ERROR" "Rolling deployment failed at instance: $instance"
-            return 1
-        fi
-    done
-    
-    log "INFO" "Rolling deployment completed"
-}
-
-# Recreate deployment (simple stop/start)
-recreate_deploy() {
-    log "INFO" "Starting recreate deployment..."
-    
-    if [ "$DRY_RUN" = true ]; then
-        log "INFO" "[DRY RUN] Would stop service, deploy new version, and start service"
-        return 0
-    fi
-    
-    # Stop service
-    ssh "$DEPLOY_USER@$DEPLOY_TARGET" "systemctl stop $SERVICE_NAME || docker stop $SERVICE_NAME || true"
-    
-    # Deploy new version
-    deploy_application
-    
-    # Start service
-    ssh "$DEPLOY_USER@$DEPLOY_TARGET" "systemctl start $SERVICE_NAME || docker start $SERVICE_NAME"
-    
-    # Health check
-    sleep 10
-    check_service_health
-}
-
-# Deploy application files
-deploy_application() {
-    log "INFO" "Deploying application files..."
-    
-    if [ "$DRY_RUN" = true ]; then
-        log "INFO" "[DRY RUN] Would deploy application files"
-        return 0
-    fi
-    
-    # Create deployment directory
-    ssh "$DEPLOY_USER@$DEPLOY_TARGET" "mkdir -p /opt/$SERVICE_NAME/releases/$VERSION"
-    
-    # Upload application package
-    if [ -f "dist/$SERVICE_NAME-$VERSION.tar.gz" ]; then
-        scp "dist/$SERVICE_NAME-$VERSION.tar.gz" "$DEPLOY_USER@$DEPLOY_TARGET:/tmp/"
-        ssh "$DEPLOY_USER@$DEPLOY_TARGET" "tar -xzf /tmp/$SERVICE_NAME-$VERSION.tar.gz -C /opt/$SERVICE_NAME/releases/$VERSION"
-        ssh "$DEPLOY_USER@$DEPLOY_TARGET" "rm /tmp/$SERVICE_NAME-$VERSION.tar.gz"
-    else
-        log "ERROR" "Application package not found: dist/$SERVICE_NAME-$VERSION.tar.gz"
-        return 1
-    fi
-    
-    # Update configuration
-    scp "$CONFIG_DIR/${ENV_CONFIGS[$ENVIRONMENT]}" "$DEPLOY_USER@$DEPLOY_TARGET:/opt/$SERVICE_NAME/releases/$VERSION/.env"
-    
-    # Set permissions
-    ssh "$DEPLOY_USER@$DEPLOY_TARGET" "chown -R $DEPLOY_USER:$DEPLOY_USER /opt/$SERVICE_NAME/releases/$VERSION"
-    ssh "$DEPLOY_USER@$DEPLOY_TARGET" "chmod +x /opt/$SERVICE_NAME/releases/$VERSION/bin/*"
-    
-    log "INFO" "Application deployment completed"
-}
-
-# Rollback deployment
-rollback_deployment() {
-    log "INFO" "Starting rollback process..."
-    
-    if [ ! -f "$BACKUP_DIR/latest_backup" ]; then
-        log "ERROR" "No backup found for rollback"
-        return 1
-    fi
-    
-    local backup_name=$(cat "$BACKUP_DIR/latest_backup")
-    local backup_path="$BACKUP_DIR/$backup_name"
-    
-    if [ ! -d "$backup_path" ]; then
-        log "ERROR" "Backup directory not found: $backup_path"
-        return 1
-    fi
-    
-    if [ "$DRY_RUN" = true ]; then
-        log "INFO" "[DRY RUN] Would rollback to backup: $backup_name"
-        return 0
-    fi
-    
-    # Stop current service
-    ssh "$DEPLOY_USER@$DEPLOY_TARGET" "systemctl stop $SERVICE_NAME || docker stop $SERVICE_NAME || true"
-    
-    # Restore from backup
-    scp "$backup_path/$backup_name.tar.gz" "$DEPLOY_USER@$DEPLOY_TARGET:/tmp/"
-    ssh "$DEPLOY_USER@$DEPLOY_TARGET" "rm -rf /opt/$SERVICE_NAME/*"
-    ssh "$DEPLOY_USER@$DEPLOY_TARGET" "tar -xzf /tmp/$backup_name.tar.gz -C /opt/$SERVICE_NAME/"
-    ssh "$DEPLOY_USER@$DEPLOY_TARGET" "rm /tmp/$backup_name.tar.gz"
-    
-    # Restore database if applicable
-    if [ -f "$backup_path/${backup_name}_db.sql.gz" ] && [ -n "${DB_NAME:-}" ]; then
-        scp "$backup_path/${backup_name}_db.sql.gz" "$DEPLOY_USER@$DEPLOY_TARGET:/tmp/"
-        ssh "$DEPLOY_USER@$DEPLOY_TARGET" "gunzip -c /tmp/${backup_name}_db.sql.gz | psql $DB_NAME"
-        ssh "$DEPLOY_USER@$DEPLOY_TARGET" "rm /tmp/${backup_name}_db.sql.gz"
-    fi
-    
-    # Start service
-    ssh "$DEPLOY_USER@$DEPLOY_TARGET" "systemctl start $SERVICE_NAME || docker start $SERVICE_NAME"
-    
-    # Health check
-    sleep 10
-    check_service_health
-    
-    log "INFO" "Rollback completed successfully"
-}
-
-# Post-deployment tasks
-post_deploy_tasks() {
-    log "INFO" "Running post-deployment tasks..."
-    
-    # Run database migrations
-    if [ -n "${DB_NAME:-}" ] && [ "$ROLLBACK" = false ]; then
-        ssh "$DEPLOY_USER@$DEPLOY_TARGET" "cd /opt/$SERVICE_NAME && ./bin/migrate.sh"
-    fi
-    
-    # Clear caches
-    ssh "$DEPLOY_USER@$DEPLOY_TARGET" "cd /opt/$SERVICE_NAME && ./bin/clear-cache.sh || true"
-    
-    # Update load balancer
-    if [ -n "${LOAD_BALANCER_URL:-}" ]; then
-        curl -X POST "$LOAD_BALANCER_URL/api/reload" || log "WARN" "Failed to reload load balancer"
-    fi
-    
-    # Send notifications
-    send_deployment_notification "success"
-    
-    log "INFO" "Post-deployment tasks completed"
-}
-
-# Send deployment notification
-send_deployment_notification() {
-    local status=$1
-    local webhook_url="${SLACK_WEBHOOK_URL:-}"
-    
-    if [ -z "$webhook_url" ]; then
-        return 0
-    fi
-    
-    local color="good"
-    if [ "$status" != "success" ]; then
-        color="danger"
-    fi
-    
-    local payload=$(cat << EOF
-{
-    "attachments": [
-        {
-            "color": "$color",
-            "title": "Deployment $status",
-            "fields": [
-                {"title": "Service", "value": "$SERVICE_NAME", "short": true},
-                {"title": "Environment", "value": "$ENVIRONMENT", "short": true},
-                {"title": "Version", "value": "$VERSION", "short": true},
-                {"title": "Deployed by", "value": "$(whoami)", "short": true}
-            ],
-            "ts": $(date +%s)
-        }
-    ]
-}
-EOF
-    )
-    
-    curl -X POST -H 'Content-type: application/json' --data "$payload" "$webhook_url" || true
-}
-
-# Main deployment process
-main() {
-    log "INFO" "Starting deployment process..."
-    
-    # Validate inputs
-    if [ -z "$ENVIRONMENT" ] || [ -z "$SERVICE_NAME" ]; then
-        log "ERROR" "Environment and service name are required"
-        usage
-        exit 1
-    fi
-    
-    if [ "$ROLLBACK" = false ] && [ -z "$VERSION" ]; then
-        log "ERROR" "Version is required for deployment (not rollback)"
-        usage
-        exit 1
-    fi
-    
-    # Load environment configuration
-    load_env_config "$ENVIRONMENT"
-    
-    # Set deployment strategy
-    local strategy="${DEPLOY_STRATEGY:-recreate}"
-    
-    if [ "$DRY_RUN" = true ]; then
-        log "INFO" "[DRY RUN] Deployment simulation"
-    fi
-    
-    # Execute deployment or rollback
-    if [ "$ROLLBACK" = true ]; then
-        rollback_deployment
-    else
-        pre_deploy_checks
-        create_backup
-        
-        # Execute deployment strategy
-        if [ -n "${DEPLOY_STRATEGIES[$strategy]:-}" ]; then
-            ${DEPLOY_STRATEGIES[$strategy]}
+        if [[ "$choice" =~ ^[0-9]+$ ]] && [ "$choice" -ge 1 ] && [ "$choice" -le ${#python_files[@]} ]; then
+            selected_file="${python_files[$((choice-1))]}"
+            echo "▶️ Running $selected_file..."
+            python3 "$selected_file"
         else
-            log "ERROR" "Unknown deployment strategy: $strategy"
+            echo "❌ Invalid choice"
             exit 1
         fi
-        
-        post_deploy_tasks
     fi
-    
-    log "INFO" "Deployment process completed successfully"
-}
+fi
+```
 
-# Usage information
-usage() {
-    cat << EOF
-Multi-Environment Deployment Script
+**📝 Exercise 2: Test the servers**
+1. Create an HTML project using your script from Part 1
+2. Use `serve_html.sh` to view it in your browser
+3. Create a Python project and use `run_python.sh` to run it
 
-Usage: $0 -e ENVIRONMENT -s SERVICE_NAME [-v VERSION] [OPTIONS]
+---
 
-Required Arguments:
-    -e, --environment   Target environment (dev/staging/prod)
-    -s, --service       Service name to deploy
+## Part 3: Simple File Helpers
 
-Optional Arguments:
-    -v, --version       Version to deploy (required for deployment)
-    -r, --rollback      Rollback to previous version
-    -n, --dry-run       Simulate deployment without making changes
-    -f, --force         Force deployment despite warnings
-    -h, --help          Show this help message
+### 3.1 Basic File Counter
 
-Examples:
-    $0 -e dev -s myapp -v 1.2.3                # Deploy version 1.2.3 to dev
-    $0 -e prod -s myapp -v 2.0.0 --dry-run    # Simulate prod deployment
-    $0 -e staging -s myapp --rollback          # Rollback staging deployment
-EOF
-}
+**💡 Copilot Prompt:**
+```
+Create a simple script that counts different types of files in a directory.
+```
 
-# Parse command line arguments
-while [[ $# -gt 0 ]]; do
-    case $1 in
-        -e|--environment)
-            ENVIRONMENT="$2"
-            shift 2
-            ;;
-        -s|--service)
-            SERVICE_NAME="$2"
-            shift 2
-            ;;
-        -v|--version)
-            VERSION="$2"
-            shift 2
-            ;;
-        -r|--rollback)
-            ROLLBACK=true
-            shift
-            ;;
-        -n|--dry-run)
-            DRY_RUN=true
-            shift
-            ;;
-        -f|--force)
-            FORCE=true
-            shift
-            ;;
-        -h|--help)
-            usage
-            exit 0
-            ;;
-        *)
-            echo "Unknown option: $1"
-            usage
-            exit 1
-            ;;
-    esac
+```bash
+#!/bin/bash
+# Simple File Counter
+# File: count_files.sh
+
+echo "📊 Counting files in current directory..."
+
+# Count different file types
+html_count=$(ls *.html 2>/dev/null | wc -l)
+python_count=$(ls *.py 2>/dev/null | wc -l)
+text_count=$(ls *.txt 2>/dev/null | wc -l)
+image_count=$(ls *.jpg *.png *.gif 2>/dev/null | wc -l)
+total_files=$(ls -1 2>/dev/null | wc -l)
+
+echo
+echo "File counts:"
+echo "📄 HTML files: $html_count"
+echo "🐍 Python files: $python_count"
+echo "📝 Text files: $text_count"
+echo "🖼️ Image files: $image_count"
+echo "📁 Total files: $total_files"
+echo
+
+# Show the biggest files
+echo "🔍 Largest files:"
+ls -lhS | head -6
+```
+
+### 3.2 Quick Backup
+
+**💡 Copilot Prompt:**
+```
+Create a very simple backup script that copies important files to a backup folder with today's date.
+```
+
+```bash
+#!/bin/bash
+# Quick Backup Script
+# File: quick_backup.sh
+
+echo "💾 Quick Backup Tool"
+
+# Create backup folder with today's date
+backup_folder="backup_$(date +%Y%m%d)"
+
+# Create the backup directory
+mkdir -p "$backup_folder"
+
+echo "📁 Created backup folder: $backup_folder"
+
+# Copy important files
+file_count=0
+
+# Backup HTML files
+for file in *.html; do
+    if [ -f "$file" ]; then
+        cp "$file" "$backup_folder/"
+        echo "✅ Backed up: $file"
+        ((file_count++))
+    fi
 done
 
-# Error handling
-trap 'log "ERROR" "Deployment failed at line $LINENO"; send_deployment_notification "failed"' ERR
+# Backup Python files
+for file in *.py; do
+    if [ -f "$file" ]; then
+        cp "$file" "$backup_folder/"
+        echo "✅ Backed up: $file"
+        ((file_count++))
+    fi
+done
 
-# Create necessary directories
-mkdir -p "$CONFIG_DIR" "$BACKUP_DIR"
+# Backup text files
+for file in *.txt; do
+    if [ -f "$file" ]; then
+        cp "$file" "$backup_folder/"
+        echo "✅ Backed up: $file"
+        ((file_count++))
+    fi
+done
 
-# Run main function
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    main "$@"
+echo
+if [ $file_count -eq 0 ]; then
+    echo "⚠️ No files found to backup"
+    rmdir "$backup_folder"
+else
+    echo "🎉 Backup complete! Saved $file_count files to $backup_folder"
 fi
 ```
 
-**🤖 Copilot Exercise 2:**
+### 3.3 Clean Downloads
+
+**💡 Copilot Prompt:**
 ```
-Create configuration files for the deployment script that support different cloud providers (AWS, Azure, GCP) and container orchestration platforms (Docker, Kubernetes).
+Create a simple script that organizes the Downloads folder by moving old files to an archive folder.
 ```
-
----
-
-## Part 4: CI/CD Integration Scripts
-
-### 4.1 GitHub Actions Integration
 
 ```bash
 #!/bin/bash
-# CI/CD Integration Helper Script
-# File: ci-cd-helper.sh
+# Clean Downloads Script
+# File: clean_downloads.sh
 
-set -euo pipefail
+echo "🧹 Cleaning Downloads folder..."
 
-# Generate GitHub Actions workflow
-generate_github_workflow() {
-    local project_type=$1
-    local workflow_file=".github/workflows/ci-cd.yml"
-    
-    mkdir -p ".github/workflows"
-    
-    cat > "$workflow_file" << EOF
-name: CI/CD Pipeline
+# Check if Downloads folder exists
+downloads_dir="$HOME/Downloads"
+if [ ! -d "$downloads_dir" ]; then
+    echo "❌ Downloads folder not found: $downloads_dir"
+    exit 1
+fi
 
-on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main ]
+cd "$downloads_dir"
 
-env:
-  NODE_VERSION: '18'
-  PYTHON_VERSION: '3.9'
-  
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Setup Environment
-      run: |
-        echo "Setting up environment for $project_type"
-        
-EOF
+# Create archive folder
+archive_dir="old_downloads_$(date +%Y%m%d)"
+mkdir -p "$archive_dir"
 
-    case $project_type in
-        "nodejs")
-            cat >> "$workflow_file" << EOF
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: \${{ env.NODE_VERSION }}
-        cache: 'npm'
-        
-    - name: Install Dependencies
-      run: npm ci
-      
-    - name: Run Tests
-      run: npm test
-      
-    - name: Build
-      run: npm run build
+echo "📁 Created archive folder: $archive_dir"
+
+# Move files older than 7 days
+moved_count=0
+
+# Find files older than 7 days and move them
+while read -r file; do
+    if [ -f "$file" ]; then
+        mv "$file" "$archive_dir/"
+        echo "📦 Moved: $file"
+        ((moved_count++))
+    fi
+done < <(find . -maxdepth 1 -type f -mtime +7)
+
+echo
+if [ $moved_count -eq 0 ]; then
+    echo "✨ Downloads folder is already clean!"
+    rmdir "$archive_dir"
+else
+    echo "🎉 Moved $moved_count old files to $archive_dir"
+    echo "💡 You can delete $archive_dir if you don't need those files"
+fi
+```
+
+**📝 Exercise 3: Try the file helpers**
+1. Use `count_files.sh` to see what files you have
+2. Use `quick_backup.sh` to backup your work
+3. Try `clean_downloads.sh` on your Downloads folder (be careful!)
+
+---
+
+## Part 4: Conclusion
+
+### 4.1 Review
+
+You've learned to create simple automation scripts that help with daily development tasks:
+
+1. **Project Setup Helpers** - Quick ways to start new HTML and Python projects
+2. **Development Servers** - Easy ways to test your code locally
+3. **File Helpers** - Simple tools to organize and backup your work
+
+These scripts are building blocks - you can modify them as you learn more bash commands!
+
+### 4.2 Next Steps
+
+**Ways to improve these scripts:**
+- Add more file types to the project creators
+- Make the file counter show more details
+- Add error checking to the backup script
+- Make the clean script ask before moving files
+
+**🤖 Copilot Tips for Script Writing:**
+- Start prompts with "Create a simple bash script that..."
+- Ask for explanations: "Explain what each line does"
+- Request improvements: "Make this script safer" or "Add user-friendly messages"
+
+### 4.3 Key Takeaways
+
+✅ **Small scripts are powerful** - Even 10-20 lines can save lots of time  
+✅ **Automate repetitive tasks** - If you do it twice, consider scripting it  
+✅ **Start simple** - You can always make scripts more complex later  
+✅ **Use echo for feedback** - Let users know what's happening  
+
+Remember: The best automation script is one you actually use! Start with simple versions and improve them as you get more comfortable with bash.
+
+---
+
+*Lab 2D: Simple Development Helpers - Complete* 🎉
 EOF
             ;;
         "python")
