@@ -283,20 +283,6 @@ I have image files with names like IMG_001.jpeg, photo_001.JPEG, picture001.jpg.
 
 ---
 
-## 🎯 Lab Deliverables
-
-Create and submit the following:
-
-1. **File Structure Report**: Document showing the directory structure you created with `tree` or `ls -R`
-
-2. **Permission Analysis**: A text file explaining the permissions on 5 different files and why those permissions are appropriate
-
-3. **Command Cheat Sheet**: Your personalized list of the most useful commands discovered with Copilot's help
-
-4. **Cleanup Script**: A simple script (using commands learned) that organizes and cleans a messy directory
-
----
-
 ## ✅ Validation Steps
 
 1. Navigate to different directories using both absolute and relative paths
