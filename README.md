@@ -1,4 +1,4 @@
-# ☁️ software-wil
+# 🔁 Advanced Software Development
 This guide provides a week-by-week overview of the Advanced Software WIL - IATD course, focusing on core software development skills, automation, project management, team collaboration,  DevOps, and Azure cloud skills. Each week includes hands-on lab guides, automation scripts, and software development best practices.
 
 ---
@@ -38,7 +38,13 @@ This guide provides a week-by-week overview of the Advanced Software WIL - IATD 
 <details>
   <summary>Week 3: Docker, YAML & Docker Compose</summary>
 
-  _This week materials will be uplaoded soon._
+  Docker containerization and orchestration with Copilot - Build and deploy containerized applications using Docker and Docker Compose with Copilot assistance:
+
+  **Labs:**
+  - Frontend containerization with nginx ([lab_3_a_frontend_containerization.md](week3/lab_3_a_frontend_containerization.md))
+  - Backend API development with Flask ([lab_3_b_backend_api_development.md](week3/lab_3_b_backend_api_development.md))
+  - Full-stack integration with Docker Compose ([lab_3_c_fullstack_integration.md](week3/lab_3_c_fullstack_integration.md))
+  - **Group Project:** Sprint 1 - Initial development and containerization
 
 </details>
 
