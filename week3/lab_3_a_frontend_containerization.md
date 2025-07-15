@@ -151,10 +151,15 @@ docker ps
 
 ### 3.1 Access Your App
 
-**💡 In Codespaces:**
+**💡 In GitHub Codespaces:**
 1. **Ports tab** shows port 3000
 2. **Click "Open in Browser"**
 3. **Test the button**
+
+**💡 For Local Development:**
+1. **Open browser** and go to `http://localhost:3000`
+2. **Test the button** to generate random players
+3. **Refresh the page** to see new random players generated
 
 
 ### 3.2 Troubleshooting with Copilot

@@ -87,12 +87,6 @@ Flask==2.3.3
 Flask-CORS==4.0.0
 ```
 
-**📝 Test:** 
-1. Run `python app.py` 
-2. Check the **Ports tab** in VS Code
-3. **Click "Open in Browser"** for port 5000
-4. Add `/players` to the URL to test the endpoint
-
 ---
 
 ## Part 2: Containerize with Docker (using Copilot)
@@ -133,10 +127,15 @@ docker ps
 
 ### 3.1 Access Your API
 
-**💡 In Codespaces:**
+**💡 In GitHub Codespaces:**
 1. **Ports tab** shows port 5000
 2. **Click "Open in Browser"**
 3. **Test endpoints**: `/` and `/players`
+
+**💡 For Local Development:**
+1. **Open browser** and go to `http://localhost:5000`
+2. **Test endpoints**: `/` and `/players`
+3. **Test specific player**: `/players/193` (use an ID from the response)
 
 **📝 Exercise 5:** Test your containerized API
 
@@ -159,7 +158,7 @@ curl http://localhost:5000/players/123
 
 ---
 
-## Part 4: Connect to Frontend (Optional)
+## Part 4: Connect to Frontend
 
 ### 4.1 Update Frontend to Use API
 
@@ -168,7 +167,7 @@ curl http://localhost:5000/players/123
 Update JavaScript to fetch data from API instead of generating local data. Add error handling for when API is not available.
 ```
 
-**📝 Exercise 6:** Add to your frontend `app.js`:
+**📝 Exercise 7:** Add to your frontend `app.js`:
 ```javascript
 async function fetchPlayersFromAPI() {
     try {
@@ -177,8 +176,20 @@ async function fetchPlayersFromAPI() {
         return data.players;
     } catch (error) {
         console.log('API not available, using local data');
-        return generatePlayers();
+        return generateLocalPlayers();
     }
+}
+
+function generateLocalPlayers() {
+    const players = [];
+    for (let i = 0; i < 5; i++) {
+        players.push({
+            id: Math.floor(Math.random() * 900) + 100,
+            name: `Player-${Math.floor(Math.random() * 900) + 100}`,
+            score: Math.floor(Math.random() * 101)
+        });
+    }
+    return players;
 }
 
 // Update generatePlayers function
@@ -189,6 +200,20 @@ async function generatePlayers() {
         .join('');
 }
 ```
+
+**📝 Exercise 8:** Test the integration:
+```bash
+# Rebuild frontend with updated code
+docker stop player-frontend && docker rm player-frontend
+docker build -t player-app .
+docker run -d --name player-frontend -p 3000:80 player-app
+
+# Test both services
+curl http://localhost:5000/players  # Backend API
+curl http://localhost:3000         # Frontend
+```
+
+**💡 Note:** In Codespaces, use the browser dev tools to check if the frontend successfully fetches from the API, or if it falls back to local data due to CORS restrictions.
 
 ---
 
