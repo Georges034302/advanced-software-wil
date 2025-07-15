@@ -215,15 +215,160 @@ if __name__ == '__main__':
 Update my frontend JavaScript to fetch player data from a backend API and display it in a table.
 ```
 
-**📝 Exercise 4:** Update `frontend/app.js`:
+**📝 Exercise 4a:** Update `frontend/index.html` for table layout:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Player App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>&#127918; Player Scoreboard</h1>
+    
+    <div class="stats-container">
+        <div id="stats">Loading...</div>
+        <button id="refresh-btn">🔄 Refresh</button>
+    </div>
+    
+    <table class="scoreboard">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody id="players-body">
+            <tr><td colspan="4">Loading players...</td></tr>
+        </tbody>
+    </table>
+    
+    <script src="app.js"></script>
+</body>
+</html>
+```
+
+**📝 Exercise 4b:** Update `frontend/style.css` for table styling:
+```css
+body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    background: #f5f5f5;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.stats-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+#stats {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+button {
+    padding: 10px 20px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    background: #45a049;
+}
+
+.scoreboard {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.scoreboard th,
+.scoreboard td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.scoreboard th {
+    background: #4CAF50;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.scoreboard td {
+    text-align: center;
+}
+
+.scoreboard tr:hover {
+    background: #f5f5f5;
+}
+
+.rank-1 {
+    background: #fff9c4 !important;
+    font-weight: bold;
+}
+
+.rank-2 {
+    background: #f0f8ff !important;
+}
+
+.rank-3 {
+    background: #f5f5dc !important;
+}
+```
+
+**📝 Exercise 4c:** Update `frontend/app.js`:
 ```javascript
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🏆 PlayerApp Full Stack loaded!');
     
-    // API base URL - works in both local and Codespaces
-    const API_BASE = window.location.protocol === 'https:' 
-        ? window.location.origin.replace('-3000.', '-5000.') 
-        : 'http://localhost:5000';
+    // API base URL - robust Codespaces detection
+    let API_BASE;
+    
+    if (window.location.protocol === 'https:') {
+        // We're in Codespaces - construct the backend URL
+        const hostname = window.location.hostname;
+        if (hostname.includes('-3000.app.github.dev')) {
+            API_BASE = `https://${hostname.replace('-3000.app.github.dev', '-5000.app.github.dev')}`;
+        } else if (hostname.includes('-3000.githubpreview.dev')) {
+            API_BASE = `https://${hostname.replace('-3000.githubpreview.dev', '-5000.githubpreview.dev')}`;
+        } else if (hostname.includes('-3000.github.dev')) {
+            API_BASE = `https://${hostname.replace('-3000.github.dev', '-5000.github.dev')}`;
+        } else {
+            // Fallback construction for any Codespaces variant
+            API_BASE = window.location.origin.replace('-3000', '-5000').replace(':3000', ':5000');
+        }
+    } else {
+        // Local development
+        API_BASE = 'http://localhost:5000';
+    }
+    
+    console.log('🌍 Current URL:', window.location.href);
+    console.log('🔗 API Base URL:', API_BASE);
     
     // Load players when page loads
     loadPlayers();
@@ -234,19 +379,24 @@ document.addEventListener('DOMContentLoaded', function() {
     async function loadPlayers() {
         try {
             console.log('📡 Fetching players from API...');
+            console.log('🔗 Using API URL:', `${API_BASE}/players`);
+            
             const response = await fetch(`${API_BASE}/players`);
+            console.log('📊 Response status:', response.status);
+            console.log('📊 Response ok:', response.ok);
             
             if (response.ok) {
                 const data = await response.json();
+                console.log('📦 Received data:', data);
                 displayPlayers(data.players);
                 console.log(`✅ Loaded ${data.players.length} players`);
             } else {
-                console.error('❌ API request failed');
-                showError('Failed to load players');
+                console.error('❌ API request failed with status:', response.status);
+                showError(`Failed to load players (Status: ${response.status})`);
             }
         } catch (error) {
             console.error('💥 Error fetching players:', error);
-            showError('Cannot connect to API');
+            showError('Cannot connect to API - Check console for details');
         }
     }
     
@@ -399,6 +549,25 @@ else
     echo "❌ Frontend failed"
 fi
 
+# Test database
+if docker-compose exec -T database mysql -u player -pplayerpass playerdb -e "SELECT COUNT(*) FROM players;" 2>/dev/null | grep -q "10"; then
+    echo "✅ Database working (10 players)"
+else
+    echo "❌ Database failed"
+fi
+
+echo ""
+echo "🎉 Full Stack Application Status:"
+echo "📊 Frontend: http://localhost:3000"
+echo "🔧 Backend API: http://localhost:5000/players"  
+echo "🗄️  Database: MySQL with 10 players"
+echo ""
+echo "✨ Lab 3C Full-Stack Integration: COMPLETE!"
+```
+else
+    echo "❌ Frontend failed"
+fi
+
 echo "🎉 Open http://localhost:3000 in your browser!"
 ```
 
@@ -476,15 +645,63 @@ docker-compose exec database mysql -u player -pplayerpass playerdb -e "SELECT * 
 
 ### 8.3 Access Your Application
 
-**🌐 In GitHub Codespaces:**
-1. **Check the "Ports" tab** in VS Code
-2. **Frontend**: Click "Open in Browser" for port 3000
-3. **Backend API**: Click "Open in Browser" for port 5000, then add `/players` to the URL
-4. **Database**: Use `localhost:3306` for direct connection from terminal
+**🌐 In GitHub Codespaces (IMPORTANT):**
 
-**💡 Note:** Codespaces automatically forwards ports and provides unique URLs like:
-- `https://your-codespace-name-3000.githubpreview.dev` (Frontend)
-- `https://your-codespace-name-5000.githubpreview.dev/players` (API)
+**Method 1: Using Ports Tab (Recommended)**
+1. **Look at the bottom panel** in VS Code
+2. **Click the "PORTS" tab** (next to Terminal, Problems, etc.)
+3. **Find port 3000** in the ports list
+4. **Click the globe icon (🌐)** or "Open in Browser" button
+5. **This opens in a new browser tab** with the correct HTTPS URL
+
+**Method 2: Manual URL Construction**
+If port forwarding isn't automatic, the URLs will be:
+- Frontend: `https://your-codespace-name-3000.app.github.dev`
+- Backend API: `https://your-codespace-name-5000.app.github.dev/players`
+
+**⚠️ Important Notes:**
+- **You CAN use VS Code's Simple Browser** for testing once ports are configured properly
+- **The application automatically detects Codespaces** and uses HTTPS URLs for API calls
+- **Check browser console** (F12) for debugging information if issues occur
+- **Port 5000 MUST be public** for frontend-backend communication
+- **Both ports 3000 and 5000** must be forwarded for full functionality
+
+**� CRITICAL: Make Backend Port Public in Codespaces**
+
+**⚠️ IMPORTANT:** For the frontend to communicate with the backend in Codespaces, you **MUST** make port 5000 public:
+
+```bash
+# Make port 5000 public (REQUIRED for API communication)
+gh codespace ports visibility 5000:public
+
+# Verify port visibility
+gh codespace ports
+```
+
+**Or manually in VS Code:**
+1. Go to **PORTS** tab (next to TERMINAL)
+2. Find port **5000** (backend)
+3. Right-click → **"Change Port Visibility"** → **"Public"**
+
+**💡 Why This is Required:**
+- **Private ports** = Only accessible within Codespaces environment
+- **Public ports** = Accessible for cross-origin requests (frontend ↔ backend)
+- Without public visibility, you'll see "❌ Cannot connect to API" errors
+
+**�💡 Troubleshooting in Codespaces:**
+```bash
+# Check if all containers are running
+docker-compose ps
+
+# Verify API is accessible (should return JSON)
+curl https://your-codespace-name-5000.app.github.dev/players
+
+# Check frontend is serving
+curl https://your-codespace-name-3000.app.github.dev
+
+# Test specific endpoint
+curl https://your-codespace-name-5000.app.github.dev/
+```
 
 ### 8.4 Key Commands
 
