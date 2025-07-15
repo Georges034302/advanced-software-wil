@@ -563,7 +563,7 @@ echo "🔧 Backend API: http://localhost:5000/players"
 echo "🗄️  Database: MySQL with 10 players"
 echo ""
 echo "✨ Lab 3C Full-Stack Integration: COMPLETE!"
-```
+
 else
     echo "❌ Frontend failed"
 fi
