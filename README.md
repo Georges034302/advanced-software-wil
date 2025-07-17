@@ -51,7 +51,13 @@ This guide provides a week-by-week overview of the Advanced Software WIL - IATD 
 <details>
   <summary>Week 4: CI/CD with GitHub Actions</summary>
 
-  _This week materials will be uplaoded soon._
+  CI/CD automation with GitHub Actions and Copilot - Build automated deployment pipelines using GitHub Actions with multi-service architectures and testing strategies:
+
+  **Labs:**
+  - Node.js Composite Actions for file analysis and web publishing ([lab_4_a_cicd_composite_actions.md](week4/lab_4_a_cicd_composite_actions.md))
+  - .NET 8 Web API with Copilot, Bogus testing, and CI pipeline ([lab_4_b_dotnet_test_ci.md](week4/lab_4_b_dotnet_test_ci.md))
+  - Multi-Container Python APIs + Frontend with Docker orchestration ([lab_4_c_python_docker_fullstack.md](week4/lab_4_c_python_docker_fullstack.md))
+  - **Group Project:** Sprint 1 completion and app release v1 [tracking: app-release-v1]
 
 </details>
 
