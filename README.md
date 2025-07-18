@@ -72,6 +72,7 @@ This guide provides a week-by-week overview of the Advanced Software WIL - IATD 
   - Scale with Azure Container Apps and auto-scaling ([lab_5_c_azure_container_apps.md](week5/lab_5_c_azure_container_apps.md))
   - Microservices with Azure Container Apps ([lab_5_d_microservices_container_apps.md](week5/lab_5_d_microservices_container_apps.md))
   - **Group Project:** Sprint 2 - Azure cloud deployment and scaling
+  - **📋 Important:** Keep GitHub Projects updated with sprint progress and task completion
 
 </details>
 
@@ -84,15 +85,19 @@ This guide provides a week-by-week overview of the Advanced Software WIL - IATD 
   - AKS cluster setup and basic deployments ([lab_6_a_aks_cluster_setup.md](week6/lab_6_a_aks_cluster_setup.md))
   - Helm chart creation and application packaging ([lab_6_b_helm_chart_creation.md](week6/lab_6_b_helm_chart_creation.md))
   - Production AKS with Helm and CI/CD ([lab_6_c_production_aks_helm_cicd.md](week6/lab_6_c_production_aks_helm_cicd.md))
-  - **Group Project:** Sprint 3 - Kubernetes orchestration and Helm packaging
+  - **Group Project:** Sprint 2 - Kubernetes orchestration and Helm packaging [tracking: GitHub Projects]
+  - **📋 Important:** Update GitHub Projects with weekly progress, task completion, and sprint milestones
 
 </details>
 
 <details>
   <summary>Week 7: Azure Dev Tools III: App Service Deployment </summary>
 
-   _This week materials will be uplaoded soon._
+  Azure App Service deployment with Copilot - Deploy web applications and APIs using Azure App Service with advanced features and production best practices:
 
+  - **Group Project:** Sprint 2 completion and app release v2 [tracking: app-release-v2]
+  - **📋 Important:** Finalize GitHub Projects with Sprint 2 deliverables and production readiness checklist
+  
 </details>
 
 <details>
