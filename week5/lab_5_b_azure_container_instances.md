@@ -1,13 +1,13 @@
 # ☁️ Lab 5B: Deploy to Azure Container Instances
 
 ## 🎯 Objective
-Deploy containerized Flask app from ACR to Azure Container Instances for scalable hosting.
+Deploy containerized Flask app from ACR to Azure Container Instances for serverless hosting.
 
 - Deploy Docker containers to Azure Container Instances (ACI)
 - Configure public endpoints and environment variables
 - Monitor container performance and logs
 - Implement health checks and restart policies
-- Scale containers based on demand
+- Automate deployment with CI/CD pipelines
 
 ## 🗂 Structure
 ```
@@ -15,6 +15,8 @@ lab5b/
 ├── scripts/
 │   ├── deploy-aci.sh
 │   └── cleanup-aci.sh
+├── .github/workflows/
+│   └── deploy-aci.yml
 └── .env (from Lab 5A)
 ```
 

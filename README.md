@@ -70,6 +70,7 @@ This guide provides a week-by-week overview of the Advanced Software WIL - IATD 
   - Azure Container Registry setup with GitHub Actions automation ([lab_5_a_azure_container_registry.md](week5/lab_5_a_azure_container_registry.md))
   - Deploy to Azure Container Instances with CI/CD ([lab_5_b_azure_container_instances.md](week5/lab_5_b_azure_container_instances.md))
   - Scale with Azure Container Apps and auto-scaling ([lab_5_c_azure_container_apps.md](week5/lab_5_c_azure_container_apps.md))
+  - Microservices with Azure Container Apps ([lab_5_d_microservices_container_apps.md](week5/lab_5_d_microservices_container_apps.md))
   - **Group Project:** Sprint 2 - Azure cloud deployment and scaling
 
 </details>
