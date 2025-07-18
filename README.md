@@ -76,9 +76,15 @@ This guide provides a week-by-week overview of the Advanced Software WIL - IATD 
 </details>
 
 <details>
-  <summary>Week 6: Azure Dev Tools II: AKS + Helm Charts </summary>
+  <summary>Week 6: Azure Dev Tools II: AKS + Helm Charts</summary>
 
-   _This week materials will be uplaoded soon._
+  Azure Kubernetes Service and Helm Charts with Copilot - Deploy and manage applications on AKS using Helm charts and Kubernetes best practices:
+
+  **Labs:**
+  - AKS cluster setup and basic deployments ([lab_6_a_aks_cluster_setup.md](week6/lab_6_a_aks_cluster_setup.md))
+  - Helm chart creation and application packaging ([lab_6_b_helm_chart_creation.md](week6/lab_6_b_helm_chart_creation.md))
+  - Production AKS with Helm and CI/CD ([lab_6_c_production_aks_helm_cicd.md](week6/lab_6_c_production_aks_helm_cicd.md))
+  - **Group Project:** Sprint 3 - Kubernetes orchestration and Helm packaging
 
 </details>
 
