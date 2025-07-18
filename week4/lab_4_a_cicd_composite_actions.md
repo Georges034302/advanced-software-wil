@@ -1,23 +1,23 @@
-# 🧪 Lab 1: ## 🚀 Setup Instructions
+# 🧪 Lab 4A: CI/CD Composite Actions
+Build a GitHub Composite Action that analyzes text files for vowel frequency, logs contributions, and automatically publishes results to GitHub Pages using Node.js and Bash scripts.
 
-### ## 🛠️ Tech Stack
+## 🎯 Objective
+- Analyze text files for vowel frequency using Node.js
+- Convert analysis results to JSON format for processing
+- Log contributor activities and timestamps using Bash
+- Generate dynamic HTML reports with automated updates
+- Deploy results to GitHub Pages via CI/CD automation
+
+## 🛠️ Tech Stack
 - Node.js (v18+)
 - Bash
 - GitHub Actions
 - Git CLI
-- GitHub Pages Create Repository Structuree.js Composite GitHub Action for File Analysis, Git Logging, and HTML Update
-
-## 🎯 Objective
-Enhance the composite GitHub Action to:
-1. Analyze a text file for vowel frequency (`analyzer.js`)
-2. Convert results to JSON (`parser.js`)
-3. Log contributor and timestamp (`logger.sh`)
-4. Update `index.html` using `updateHTML.sh` and `render.js`
-5. Push updates and publish the HTML page via GitHub Pages
+- GitHub Pages
 
 ---
 
-## � Setup Instructions
+## 🚀 Setup Instructions
 
 ### Step 1: Create Repository Structure
 ```bash
@@ -38,24 +38,7 @@ Automation makes development efficient and reliable.
 EOF
 ```
 
-### Step 2: Implementation Overview
-The following sections provide complete implementations for all required files.
-
-
-
----
-
-## �🛠️ Tech Stack
-- Node.js (v18+)
-- Bash
-- GitHub Actions
-- Git CLI
-- GitHub Pages
-- Vanilla JavaScript (render.js)
-
----
-
-## 📁 Folder Structure
+### 📁 Folder Structure
 
 ```
 root/
@@ -79,7 +62,7 @@ root/
 
 ---
 
-## 💻 Script Implementations
+### Step 2: 💻 Script Implementations
 
 ### 📝 `analyzer.js`
 
@@ -492,7 +475,7 @@ jobs:
 
 ---
 
-## 🧪 Testing & Deployment
+## Step 3: 🧪 Testing & Deployment
 
 ### Local Testing
 ```bash

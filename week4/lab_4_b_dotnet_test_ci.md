@@ -1,4 +1,4 @@
-# 🧪 Lab 2: ## 🚀 Lab 4B: .NET 8 Web API with Copilot, Bogus, and CI/CD
+# 🧪 Lab 4B: 🚀 .NET 8 Web API with Copilot, Bogus, and CI/CD
 
 Build a complete .NET 8 Web API lab using GitHub Copilot for AI-assisted development, Bogus for realistic test data, and a local HTML UI — with CI powered by GitHub Actions for automated build and test workflows.
 
