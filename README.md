@@ -86,6 +86,7 @@ This guide provides a week-by-week overview of the Advanced Software WIL - IATD 
   - AKS cluster setup and basic deployments ([lab_6_a_aks_cluster_setup.md](week6/lab_6_a_aks_cluster_setup.md))
   - Helm chart creation and application packaging ([lab_6_b_helm_chart_creation.md](week6/lab_6_b_helm_chart_creation.md))
   - Production AKS with Helm and CI/CD ([lab_6_c_production_aks_helm_cicd.md](week6/lab_6_c_production_aks_helm_cicd.md))
+  - Bicep AKS provisioning with Helm deployment ([lab_6_d_bicep_aks_helm.md](week6/lab_6_d_bicep_aks_helm.md))
   - **Group Project:** Sprint 2 - Kubernetes orchestration and Helm packaging [tracking: GitHub Projects]
   - **📋 Important:** Update GitHub Projects with weekly progress, task completion, and sprint milestones
 
@@ -100,6 +101,7 @@ This guide provides a week-by-week overview of the Advanced Software WIL - IATD 
   - Azure App Service code deployment with microservices ([lab_7_a_app_service_code_deployment.md](week7/lab_7_a_app_service_code_deployment.md))
   - Azure App Service container deployment and ACR integration ([lab_7_b_app_service_container_deployment.md](week7/lab_7_b_app_service_container_deployment.md))
   - Production App Service CI/CD pipeline with GitHub Actions ([lab_7_c_production_app_service_cicd.md](week7/lab_7_c_production_app_service_cicd.md))
+  - ARM template and CLI deployment to App Service ([lab_7_d_arm_template_cli_deployment.md](week7/lab_7_d_arm_template_cli_deployment.md))
   - **Group Project:** Sprint 2 completion and app release v2 [tracking: app-release-v2]
   - **📋 Important:** Finalize GitHub Projects with Sprint 2 deliverables and production readiness checklist
   
