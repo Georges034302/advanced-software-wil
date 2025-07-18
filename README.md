@@ -71,6 +71,7 @@ This guide provides a week-by-week overview of the Advanced Software WIL - IATD 
   - Deploy to Azure Container Instances with CI/CD ([lab_5_b_azure_container_instances.md](week5/lab_5_b_azure_container_instances.md))
   - Scale with Azure Container Apps and auto-scaling ([lab_5_c_azure_container_apps.md](week5/lab_5_c_azure_container_apps.md))
   - Microservices with Azure Container Apps ([lab_5_d_microservices_container_apps.md](week5/lab_5_d_microservices_container_apps.md))
+  - ARM template deployment to Azure Container Apps ([lab_5_e_arm_template_deployment.md](week5/lab_5_e_arm_template_deployment.md))
   - **Group Project:** Sprint 2 - Azure cloud deployment and scaling
   - **📋 Important:** Keep GitHub Projects updated with sprint progress and task completion
 
@@ -95,6 +96,10 @@ This guide provides a week-by-week overview of the Advanced Software WIL - IATD 
 
   Azure App Service deployment with Copilot - Deploy web applications and APIs using Azure App Service with advanced features and production best practices:
 
+  **Labs:**
+  - Azure App Service code deployment with microservices ([lab_7_a_app_service_code_deployment.md](week7/lab_7_a_app_service_code_deployment.md))
+  - Azure App Service container deployment and ACR integration ([lab_7_b_app_service_container_deployment.md](week7/lab_7_b_app_service_container_deployment.md))
+  - Production App Service CI/CD pipeline with GitHub Actions ([lab_7_c_production_app_service_cicd.md](week7/lab_7_c_production_app_service_cicd.md))
   - **Group Project:** Sprint 2 completion and app release v2 [tracking: app-release-v2]
   - **📋 Important:** Finalize GitHub Projects with Sprint 2 deliverables and production readiness checklist
   
