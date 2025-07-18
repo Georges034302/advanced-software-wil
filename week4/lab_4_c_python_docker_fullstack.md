@@ -27,12 +27,13 @@ Build a **multi-container system** using Docker Compose with GitHub Copilot assi
 
 ## 🎯 Learning Objectives
 
-- Build multiple Python Flask APIs with **GitHub Copilot**
-- Implement **inter-service communication** between APIs
-- Use **Docker Compose** for multi-container orchestration
-- Create a **frontend** that consumes multiple backend services
-- Set up **CI/CD pipeline** for containerized applications
-- Practice **service discovery** and **container networking**
+- Build multiple Python Flask APIs with inter-service communication
+- Implement Docker Compose for multi-container orchestration
+- Create frontend interfaces that consume multiple backend services
+- Set up automated CI/CD pipelines for containerized applications
+- Practice microservices architecture and service discovery patterns
+- Develop container networking and health monitoring systems
+- Master API aggregation and service integration patterns
 
 ---
 
