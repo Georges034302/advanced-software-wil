@@ -386,7 +386,7 @@ spec:
 
 ---
 
-## ✅ Step 4: Deploy & Test
+## ✅ Step 6: Deploy & Test
 
 ### Deploy to AKS
 ```bash
@@ -396,8 +396,6 @@ chmod +x deploy.sh cleanup.sh
 # Deploy the application
 ./deploy.sh
 ```
-
-## ✅ Step 6: Test Load Balancing
 
 ### Verify Deployment
 ```bash
