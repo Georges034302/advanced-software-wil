@@ -1127,32 +1127,7 @@ export REPORT_SERVICE_URL=https://$REPORT_SERVICE_PROD.azurewebsites.net
 ./scripts/health-check.sh
 ```
 
-## ✅ Step 7: Sprint 2 Completion
-
-### GitHub Projects Integration
-Update your GitHub Project with:
-
-1. **Create Project Milestone**: "Sprint 2 - App Release v2"
-2. **Update Tasks**:
-   - ✅ Azure App Service deployment strategies
-   - ✅ Container-based microservices architecture  
-   - ✅ Production CI/CD pipeline implementation
-   - ✅ Automated testing and quality gates
-   - ✅ Multi-environment deployment (staging/production)
-
-3. **Mark as Complete**: Sprint 2 deliverables
-4. **Create Release**: Tag as `app-release-v2`
-
-### Production Readiness Checklist
-- ✅ **Automated CI/CD**: GitHub Actions pipeline
-- ✅ **Testing**: Unit tests and integration tests
-- ✅ **Health Checks**: Comprehensive health monitoring
-- ✅ **Multi-Environment**: Staging and production environments
-- ✅ **Security**: ACR private registry and secure credentials
-- ✅ **Monitoring**: Metrics and logging endpoints
-- ✅ **Documentation**: Complete deployment documentation
-
-## ✅ Step 8: Cleanup
+## ✅ Step 7: Cleanup
 
 ### `.github/workflows/destroy-environments.yml`
 ```yaml

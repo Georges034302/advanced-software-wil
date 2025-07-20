@@ -108,23 +108,50 @@ This guide provides a week-by-week overview of the Advanced Software WIL - IATD 
 </details>
 
 <details>
-  <summary>Week 8: Azure SQL Integration with CI/CD </summary>
+  <summary>Week 8: Azure SQL Integration with CI/CD</summary>
 
-   _This week materials will be uplaoded soon._
+  Integrate and automate Azure SQL within CI/CD pipelines using secure app connections:
+
+  **Labs:**
+  - Azure SQL infrastructure provisioning with ARM templates and CLI ([lab_8_a_azure_sql_infrastructure.md](week8/lab_8_a_azure_sql_infrastructure.md))
+  - Secure application database connection with environment variables ([lab_8_b_secure_app_connection.md](week8/lab_8_b_secure_app_connection.md))
+  - CI/CD pipeline with automated database schema management ([lab_8_c_cicd_database_automation.md](week8/lab_8_c_cicd_database_automation.md))
+  - **Group Project:** Sprint 3 - Database integration and data persistence [tracking: sprint-3-data]
+  - **📋 Important:** Begin Sprint 3 with full-stack data persistence and automated deployments
 
 </details>
 
 <details>
-  <summary>Week 9: Security & DevOps Best Practices </summary>
+  <summary>Week 9: Security & DevOps Best Practices</summary>
 
-   _This week materials will be uplaoded soon._
+  Implement DevSecOps practices using Key Vault, Managed Identity, and secure pipelines:
+
+  **Labs:**
+  - Azure Key Vault setup and secret management with ARM templates ([lab_9_a_azure_key_vault_setup.md](week9/lab_9_a_azure_key_vault_setup.md))
+  - Managed Identity for secure app-to-database connection ([lab_9_b_managed_identity_integration.md](week9/lab_9_b_managed_identity_integration.md))
+  - CodeQL security analysis and Dependabot integration ([lab_9_c_codeql_dependabot_security.md](week9/lab_9_c_codeql_dependabot_security.md))
+  - ARM template security hardening and compliance ([lab_9_d_arm_security_hardening.md](week9/lab_9_d_arm_security_hardening.md))
+  - **Group Project:** Sprint 3 - Security implementation and DevSecOps automation [tracking: sprint-3-security]
+  - **📋 Important:** Harden application security and implement automated security scanning
 
 </details>
 
 <details>
   <summary>Week 10: Capstone Project: Final Delivery & Presentation</summary>
 
-   _This week is reserved for capstone, review, and showcase._
+  Complete capstone project with full-stack application, security, and DevOps automation:
+
+  **Deliverables:**
+  - **Final Application:** Production-ready full-stack group application with indiviual service APIs + datbases
+  - **Application Stack:** `Your Choice of programming languages` to develop the application. (Group + Individual)
+  - **Deployment Platform:** Production-ready app deployed to App Service or AKS with Hlem
+  - **Infrastructure Provisioning**: Create Azure resources using CLI and ARM templates
+  - **Security Implementation:** Key Vault, Managed Identity, and secure pipelines
+  - **DevOps Automation:** Complete CI/CD with unit testing, continous deployment, security scanning (CodeQL + Dependabot)
+  - **Documentation:** Comprehensive README, API docs, copilot prompts, system architecture and deployment guides
+  - **Presentation:** Live demo and technical presentation
+  - **Group Project:** Sprint 3 completion and final app release v3 [tracking: final-release-v3]
+  - **📋 Important:** Final GitHub Projects showcase with complete development lifecycle
 
 </details>
 
