@@ -130,7 +130,7 @@ This guide provides a week-by-week overview of the Advanced Software WIL - IATD 
   - Azure Key Vault setup and secret management with ARM templates ([lab_9_a_azure_key_vault_setup.md](week9/lab_9_a_azure_key_vault_setup.md))
   - Managed Identity for secure app-to-database connection ([lab_9_b_managed_identity_integration.md](week9/lab_9_b_managed_identity_integration.md))
   - CodeQL security analysis and Dependabot integration ([lab_9_c_codeql_dependabot_security.md](week9/lab_9_c_codeql_dependabot_security.md))
-  - ARM template security hardening and compliance ([lab_9_d_arm_security_hardening.md](week9/lab_9_d_arm_security_hardening.md))
+  - ARM template security hardening and compliance ([lab_9_c_arm_security_hardening.md](week9/lab_9_c_arm_security_hardening.md))
   - **Group Project:** Sprint 3 - Security implementation and DevSecOps automation [tracking: sprint-3-security]
   - **📋 Important:** Harden application security and implement automated security scanning
 

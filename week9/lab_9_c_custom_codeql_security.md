@@ -1,4 +1,4 @@
-# 🔐 Lab 9D: Custom CodeQL Security Queries and Dependabot
+# 🔐 Lab 9C: Custom CodeQL Security Queries and Dependabot
 
 ## 🎯 Objective
 Create custom CodeQL queries to detect specific security issues in a simple Python app, plus automated dependency management.
