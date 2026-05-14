@@ -157,4 +157,4 @@ This guide provides a week-by-week overview of the Advanced Software WIL - IATD 
 
 ---
 
-✅ Each lab folder contains `.md` walkthroughs with both Portal and CLI steps, supporting files, and validation instructions. Continue learning by customizing labs with your own workloads!
+<sub><i><span style="color:#B0B0B0">👤 Author: Dr. Georges Bou Ghantous</span></i></sub>
